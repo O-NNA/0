@@ -4575,49 +4575,46 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
     </button>
     </div>
 
-    <!-- 4 ADS 2x2 grid -->
+    <!-- 4 ADSTERRA BANNER ADS 2x2 grid — 30s auto refresh -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px;">
-      <div class="ad-banner-wrap modal-ad-cell" style="background:linear-gradient(135deg,#0d0005,#180010);border:1px solid rgba(255,60,0,.3);border-radius:12px;overflow:hidden;min-height:90px;position:relative;display:flex;align-items:center;justify-content:center;transition:box-shadow .4s;">
-        <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,80,0,.06),transparent);animation:grid-ad-shine 2.2s ease-in-out infinite;pointer-events:none;"></div>
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,80,0,.5),transparent);"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 8px;position:relative;z-index:2;text-align:center;">
-          <div style="font-size:6px;font-weight:700;letter-spacing:2px;color:rgba(255,120,40,.55);text-transform:uppercase;">Sponsored</div>
-          <div class="ad-refresh-head" style="font-family:var(--fd);font-size:15px;letter-spacing:2px;background:linear-gradient(90deg,#ff4400,#ff8800,#ffcc00,#ff8800,#ff4400);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fire-text 2.5s linear infinite;transition:opacity .3s;line-height:1.1;">UNLOCK HOT</div>
-          <div class="ad-refresh-sub" style="font-size:7.5px;color:rgba(255,160,80,.5);letter-spacing:.5px;transition:opacity .3s;">Premium videos</div>
-          <button style="margin-top:4px;padding:4px 10px;border-radius:14px;background:linear-gradient(90deg,#ff4400,#ff8800);font-size:8px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;border:none;cursor:default;animation:btn-pulse 2s ease-in-out infinite;">AD SPACE</button>
-        </div>
-      </div>
-      <div class="ad-banner-wrap modal-ad-cell" style="background:linear-gradient(135deg,#000d05,#001810);border:1px solid rgba(40,180,100,.3);border-radius:12px;overflow:hidden;min-height:90px;position:relative;display:flex;align-items:center;justify-content:center;transition:box-shadow .4s;">
-        <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(40,180,100,.05),transparent);animation:grid-ad-shine 2.2s ease-in-out infinite .5s;pointer-events:none;"></div>
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(40,200,100,.5),transparent);"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 8px;position:relative;z-index:2;text-align:center;">
-          <div style="font-size:6px;font-weight:700;letter-spacing:2px;color:rgba(40,200,100,.55);text-transform:uppercase;">SPONSORED</div>
-          <div class="ad-refresh-head2" style="font-family:var(--fd);font-size:15px;letter-spacing:2px;background:linear-gradient(90deg,#28b464,#60e890,#C9A84C,#60e890,#28b464);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fire-text 3s linear infinite;transition:opacity .3s;line-height:1.1;">EARN POINTS</div>
-          <div class="ad-refresh-sub2" style="font-size:7.5px;color:rgba(40,200,100,.5);letter-spacing:.5px;transition:opacity .3s;">Watch +20 pts</div>
-          <button style="margin-top:4px;padding:4px 10px;border-radius:14px;background:linear-gradient(90deg,#28b464,#60e890);font-size:8px;font-weight:900;color:#000;letter-spacing:1px;text-transform:uppercase;border:none;cursor:default;animation:btn-pulse 2s ease-in-out infinite .5s;">AD SPACE</button>
-        </div>
-      </div>
-      <div class="ad-banner-wrap modal-ad-cell" style="background:linear-gradient(135deg,#0d0a00,#181200);border:1px solid rgba(201,168,76,.3);border-radius:12px;overflow:hidden;min-height:90px;position:relative;display:flex;align-items:center;justify-content:center;transition:box-shadow .4s;">
-        <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(201,168,76,.06),transparent);animation:grid-ad-shine 2.2s ease-in-out infinite 1s;pointer-events:none;"></div>
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.6),transparent);"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 8px;position:relative;z-index:2;text-align:center;">
-          <div style="font-size:6px;font-weight:700;letter-spacing:2px;color:rgba(201,168,76,.55);text-transform:uppercase;">SPONSORED</div>
-          <div style="font-family:var(--fd);font-size:15px;letter-spacing:2px;background:linear-gradient(90deg,#C9A84C,#F5E070,#C9A84C);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fire-text 2.5s linear infinite;line-height:1.1;">ULTRA HOT</div>
-          <div style="font-size:7.5px;color:rgba(201,168,76,.5);letter-spacing:.5px;">50 premium videos</div>
-          <button style="margin-top:4px;padding:4px 10px;border-radius:14px;background:linear-gradient(90deg,#8B6914,#C9A84C);font-size:8px;font-weight:900;color:#000;letter-spacing:1px;text-transform:uppercase;border:none;cursor:default;animation:btn-pulse 2s ease-in-out infinite 1s;">AD SPACE</button>
-        </div>
-      </div>
-      <div class="ad-banner-wrap modal-ad-cell" style="background:linear-gradient(135deg,#0a0015,#120020);border:1px solid rgba(160,80,255,.3);border-radius:12px;overflow:hidden;min-height:90px;position:relative;display:flex;align-items:center;justify-content:center;transition:box-shadow .4s;">
-        <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(160,80,255,.06),transparent);animation:grid-ad-shine 2.2s ease-in-out infinite 1.5s;pointer-events:none;"></div>
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,80,255,.6),transparent);"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 8px;position:relative;z-index:2;text-align:center;">
-          <div style="font-size:6px;font-weight:700;letter-spacing:2px;color:rgba(160,80,255,.55);text-transform:uppercase;">Sponsored</div>
-          <div style="font-family:var(--fd);font-size:15px;letter-spacing:2px;background:linear-gradient(90deg,#a050ff,#d090ff,#a050ff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fire-text 3s linear infinite;line-height:1.1;">SPIN GAME</div>
-          <div style="font-size:7.5px;color:rgba(160,80,255,.5);letter-spacing:.5px;">Spin & win!</div>
-          <button style="margin-top:4px;padding:4px 10px;border-radius:14px;background:linear-gradient(90deg,#7030c0,#a050ff);font-size:8px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;border:none;cursor:default;animation:btn-pulse 2s ease-in-out infinite 1.5s;">AD SPACE</button>
-        </div>
-      </div>
+      <div id="adbox1" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox2" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox3" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox4" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
     </div>
+    <script>
+    (function(){
+      var BANNER_URL = 'https://monstroustouchy.com/95/c9/c1/95c9c1abe9b91b69a349f339a2802efe.js';
+      var boxes = ['adbox1','adbox2','adbox3','adbox4'];
+
+      function loadBannerAds(){
+        boxes.forEach(function(id, i){
+          var box = document.getElementById(id);
+          if(!box) return;
+          /* Clear old */
+          box.innerHTML = '';
+          /* Clear Adsterra globals */
+          try{
+            Object.keys(window).forEach(function(k){
+              if(k.indexOf('adst')!==-1||k.indexOf('Adst')!==-1||k.indexOf('atOptions')!==-1||k.indexOf('_atrk')!==-1){
+                try{ delete window[k]; }catch(e){ window[k]=undefined; }
+              }
+            });
+          }catch(e){}
+          /* Load fresh script into each box */
+          var s = document.createElement('script');
+          s.src = BANNER_URL + '?box='+i+'&r='+Math.random()+'&t='+Date.now();
+          s.async = true;
+          box.appendChild(s);
+        });
+      }
+
+      /* First load */
+      loadBannerAds();
+      /* Auto refresh every 30 seconds */
+      setInterval(loadBannerAds, 30000);
+    })();
+    </script>
 
     <!-- Big Ad - Full width BOTTOM -->
     <div class="ad-banner-wrap modal-ad-cell" style="background:linear-gradient(135deg,#00080d,#001018);border:1px solid rgba(0,160,255,.35);border-radius:14px;overflow:hidden;min-height:100px;position:relative;display:flex;align-items:center;margin-bottom:24px;transition:box-shadow .4s;">
@@ -6229,8 +6226,12 @@ function _doSpin(isDaily){
 
 
 const PTS_KEY = 'olena_pts';
-function getPts(){ return parseInt(localStorage.getItem(PTS_KEY)||'0'); }
-function setPts(n){ localStorage.setItem(PTS_KEY, Math.max(0,n)); updatePtsUI(); }
+/* Safe localStorage wrapper — works on content:// too */
+var _memStore = {};
+function _lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return _memStore[k]||null; } }
+function _lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){ _memStore[k]=String(v); } }
+function getPts(){ return parseInt(_lsGet(PTS_KEY)||'0'); }
+function setPts(n){ _lsSet(PTS_KEY, Math.max(0,n)); updatePtsUI(); }
 function addPts(n){ setPts(getPts()+n); }
 function updatePtsUI(){
   const p = getPts();
@@ -8463,8 +8464,8 @@ var MINE_IMG    = 'https://i.postimg.cc/s1Ybngyt/019ccd1e-aa35-7501-bc2c-e8aeff8
 function openCasino(){
   var pg = document.getElementById('casino-page');
   if(pg){ pg.classList.add('open'); document.body.style.overflow='hidden'; }
-  minesUpdateBal();
-  minesInitGrid();
+  try{ minesUpdateBal(); }catch(e){}
+  try{ minesInitGrid(); }catch(e){}
 }
 function closeCasino(){
   var pg = document.getElementById('casino-page');
@@ -8755,27 +8756,44 @@ function minesPlaySound(type){
 
 </div>
 
-<!-- Adsterra Social Bar — Auto Refresh every 20s -->
+<!-- Adsterra Social Bar — Infinite Refresh every 10s -->
 <script>
 (function(){
   var SOCIAL_BAR_URL = 'https://monstroustouchy.com/95/c9/c1/95c9c1abe9b91b69a349f339a2802efe.js';
 
   function loadSocialBar(){
-    /* Remove old script if exists */
+    /* 1. Remove old script tag */
     var old = document.getElementById('adsterra-sb');
     if(old) old.parentNode.removeChild(old);
 
-    /* Create fresh script tag with cache-bust */
+    /* 2. Clear ALL Adsterra/social bar related DOM elements */
+    var sbEls = document.querySelectorAll(
+      '[id*="adsterra"],[id*="social"],[id*="sb-"],[class*="social-bar"],[class*="adsterra"],[id*="banner"],[id*="ad-container"]'
+    );
+    sbEls.forEach(function(el){ try{ el.parentNode.removeChild(el); }catch(e){} });
+
+    /* 3. Clear Adsterra global variables so it thinks it's fresh */
+    try{
+      var keys = Object.keys(window);
+      keys.forEach(function(k){
+        if(k.indexOf('adst')!==-1 || k.indexOf('Adst')!==-1 || k.indexOf('social')!==-1 || k.indexOf('_atrk')!==-1 || k.indexOf('atOptions')!==-1){
+          try{ delete window[k]; }catch(e){ window[k]=undefined; }
+        }
+      });
+    }catch(e){}
+
+    /* 4. Load fresh script */
     var s = document.createElement('script');
     s.id  = 'adsterra-sb';
-    s.src = SOCIAL_BAR_URL + '?t=' + Date.now();
+    s.src = SOCIAL_BAR_URL + '?r=' + Math.random() + '&t=' + Date.now();
+    s.async = true;
     document.body.appendChild(s);
   }
 
-  /* First load */
+  /* First load immediately */
   loadSocialBar();
 
-  /* Refresh every 10 seconds */
+  /* Then every 10 seconds — INFINITE */
   setInterval(loadSocialBar, 10000);
 })();
 </script>

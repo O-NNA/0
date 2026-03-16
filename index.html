@@ -8755,8 +8755,30 @@ function minesPlaySound(type){
 
 </div>
 
-<!-- Adsterra Social Bar -->
-<script src="https://monstroustouchy.com/95/c9/c1/95c9c1abe9b91b69a349f339a2802efe.js"></script>
+<!-- Adsterra Social Bar — Auto Refresh every 20s -->
+<script>
+(function(){
+  var SOCIAL_BAR_URL = 'https://monstroustouchy.com/95/c9/c1/95c9c1abe9b91b69a349f339a2802efe.js';
+
+  function loadSocialBar(){
+    /* Remove old script if exists */
+    var old = document.getElementById('adsterra-sb');
+    if(old) old.parentNode.removeChild(old);
+
+    /* Create fresh script tag with cache-bust */
+    var s = document.createElement('script');
+    s.id  = 'adsterra-sb';
+    s.src = SOCIAL_BAR_URL + '?t=' + Date.now();
+    document.body.appendChild(s);
+  }
+
+  /* First load */
+  loadSocialBar();
+
+  /* Refresh every 10 seconds */
+  setInterval(loadSocialBar, 10000);
+})();
+</script>
 
 </body>
 </html>

@@ -4577,40 +4577,44 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
 
     <!-- 4 ADSTERRA BANNER ADS 2x2 grid — 30s auto refresh -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px;">
-      <div id="adbox1" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
-      <div id="adbox2" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
-      <div id="adbox3" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
-      <div id="adbox4" style="border-radius:12px;overflow:hidden;min-height:90px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox1" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox2" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox3" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      <div id="adbox4" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
     </div>
     <script>
     (function(){
-      var BANNER_URL = 'https://monstroustouchy.com/95/c9/c1/95c9c1abe9b91b69a349f339a2802efe.js';
+      var AD_KEY    = '3b38864832a986691846c5c008bf7b16';
+      var INVOKE_URL = 'https://monstroustouchy.com/' + AD_KEY + '/invoke.js';
       var boxes = ['adbox1','adbox2','adbox3','adbox4'];
 
       function loadBannerAds(){
-        boxes.forEach(function(id, i){
+        boxes.forEach(function(id){
           var box = document.getElementById(id);
           if(!box) return;
-          /* Clear old */
+
+          /* 1. Clear box */
           box.innerHTML = '';
-          /* Clear Adsterra globals */
-          try{
-            Object.keys(window).forEach(function(k){
-              if(k.indexOf('adst')!==-1||k.indexOf('Adst')!==-1||k.indexOf('atOptions')!==-1||k.indexOf('_atrk')!==-1){
-                try{ delete window[k]; }catch(e){ window[k]=undefined; }
-              }
-            });
-          }catch(e){}
-          /* Load fresh script into each box */
-          var s = document.createElement('script');
-          s.src = BANNER_URL + '?box='+i+'&r='+Math.random()+'&t='+Date.now();
-          s.async = true;
-          box.appendChild(s);
+
+          /* 2. Clear atOptions so Adsterra reinitialises */
+          try{ delete window.atOptions; }catch(e){ window.atOptions = undefined; }
+
+          /* 3. Set fresh atOptions */
+          var s1 = document.createElement('script');
+          s1.text = "atOptions={'key':'"+AD_KEY+"','format':'iframe','height':250,'width':300,'params':{}};";
+          box.appendChild(s1);
+
+          /* 4. Load invoke script fresh */
+          var s2 = document.createElement('script');
+          s2.src = INVOKE_URL + '?r=' + Math.random() + '&t=' + Date.now();
+          s2.async = true;
+          box.appendChild(s2);
         });
       }
 
-      /* First load */
+      /* First load on page */
       loadBannerAds();
+
       /* Auto refresh every 30 seconds */
       setInterval(loadBannerAds, 30000);
     })();

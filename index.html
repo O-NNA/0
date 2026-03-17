@@ -4620,19 +4620,31 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
     })();
     </script>
 
-    <!-- Big Ad - Full width BOTTOM -->
-    <div class="ad-banner-wrap modal-ad-cell" style="background:linear-gradient(135deg,#00080d,#001018);border:1px solid rgba(0,160,255,.35);border-radius:14px;overflow:hidden;min-height:100px;position:relative;display:flex;align-items:center;margin-bottom:24px;transition:box-shadow .4s;">
-      <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,160,255,.06),transparent);animation:grid-ad-shine 2.2s ease-in-out infinite 2s;pointer-events:none;"></div>
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,160,255,.7),transparent);"></div>
-      <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;position:relative;z-index:2;width:100%;">
-        <div style="flex:1;">
-          <div style="font-size:6px;font-weight:700;letter-spacing:2px;color:rgba(0,160,255,.55);text-transform:uppercase;margin-bottom:4px;">Sponsored · 18+</div>
-          <div style="font-family:var(--fd);font-size:22px;letter-spacing:3px;background:linear-gradient(90deg,#0090ff,#60d0ff,#0090ff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fire-text 2.5s linear infinite;line-height:1.1;">DAILY STREAK REWARD</div>
-          <div style="font-size:9px;color:rgba(0,160,255,.5);margin-top:4px;">Come back daily · Earn more stars</div>
-        </div>
-        <button style="padding:10px 16px;border-radius:14px;background:linear-gradient(90deg,#0060c0,#0090ff);font-size:10px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;border:none;cursor:default;white-space:nowrap;flex-shrink:0;animation:btn-pulse 2s ease-in-out infinite 2s;">AD SPACE</button>
-      </div>
-    </div>
+    <!-- Big Ad - Full width BOTTOM - Real Adsterra -->
+    <div id="adbox-bottom" style="border-radius:14px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;margin-bottom:24px;"></div>
+    <script>
+    (function(){
+      var AD_KEY     = '3b38864832a986691846c5c008bf7b16';
+      var INVOKE_URL = 'https://monstroustouchy.com/' + AD_KEY + '/invoke.js';
+
+      function loadBottomAd(){
+        var box = document.getElementById('adbox-bottom');
+        if(!box) return;
+        box.innerHTML = '';
+        try{ delete window.atOptions; }catch(e){ window.atOptions=undefined; }
+        var s1 = document.createElement('script');
+        s1.text = "atOptions={'key':'"+AD_KEY+"','format':'iframe','height':250,'width':300,'params':{}};";
+        box.appendChild(s1);
+        var s2 = document.createElement('script');
+        s2.src = INVOKE_URL + '?r=' + Math.random() + '&t=' + Date.now();
+        s2.async = true;
+        box.appendChild(s2);
+      }
+
+      loadBottomAd();
+      setInterval(loadBottomAd, 30000);
+    })();
+    </script>
 
     <!-- Hidden like/dislike for JS compatibility -->
     <button id="lkb" style="display:none;"><span id="lkn">0</span></button>

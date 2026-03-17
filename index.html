@@ -9,6 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script async src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script async src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<!-- Adsterra 300x250 Banner -->
+<script>
+  atOptions = {
+    'key' : '3b38864832a986691846c5c008bf7b16',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://monstroustouchy.com/3b38864832a986691846c5c008bf7b16/invoke.js"></script>
 <style>
 /* ═══════════════════════════════════════════
    TOKENS
@@ -1275,6 +1286,16 @@ img{display:block;max-width:100%}
 /* ═══════════════════════════════════════════
    VIDEO MODAL
 ═══════════════════════════════════════════ */
+/* ── Modal 4-ad grid — each slot is 156x130, iframe scaled inside ── */
+#modal-ad-1, #modal-ad-2, #modal-ad-3, #modal-ad-4, #modal-ad-5, #modal-ad-6 {
+  overflow: hidden !important;
+  width: 156px !important;
+  height: 130px !important;
+  border-radius: 8px;
+  background: #0a0a0a;
+  flex-shrink: 0;
+}
+
 #modal{
   position:fixed;inset:0;z-index:500;
   background:#000;
@@ -3261,13 +3282,9 @@ function hmToggle(id){
       <div class="pq-divider-line"></div>
     </div>
 
-    <div class="pq-ad-slot" id="pq-ad-1">
-      <div class="pq-ad-slot-lbl">AD SLOT 1 · Replace with real ad</div>
-      <div class="pq-ad-slot-txt">YOUR AD HERE</div>
+    <div class="pq-ad-slot" id="pq-ad-1" style="display:flex;align-items:center;justify-content:center;min-height:260px;background:transparent;border:none;">
     </div>
-    <div class="pq-ad-slot" id="pq-ad-2">
-      <div class="pq-ad-slot-lbl">AD SLOT 2 · Replace with real ad</div>
-      <div class="pq-ad-slot-txt">YOUR AD HERE</div>
+    <div class="pq-ad-slot" id="pq-ad-2" style="display:flex;align-items:center;justify-content:center;min-height:260px;background:transparent;border:none;">
     </div>
 
   </div>
@@ -3411,11 +3428,8 @@ function pqShowAdScreen(){
         '<div style="font-size:10px;color:rgba(255,255,255,.4);">sec</div>' +
       '</div>' +
     '</div>' +
-    /* Ad full screen area */
-    '<div style="flex:1;position:relative;background:linear-gradient(135deg,#080010,#100018);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">' +
-      '<div style="font-size:56px;">📺</div>' +
-      '<div style="font-family:Bebas Neue,cursive;font-size:22px;letter-spacing:4px;color:rgba(255,255,255,.25);">AD SPACE</div>' +
-      '<div style="font-size:10px;color:rgba(255,255,255,.18);text-align:center;max-width:200px;line-height:1.6;">Your full-screen ad here<br>Replace with real ad SDK</div>' +
+    /* Adsterra ad area */
+    '<div id="pq-ad-slot" style="flex:1;position:relative;background:#080008;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;overflow:hidden;">' +
       /* Bottom progress bar */
       '<div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,.08);">' +
         '<div id="pq-ad-prog" style="height:100%;width:0%;background:linear-gradient(90deg,' + colMain + ',' + colEnd + ');border-radius:2px;"></div>' +
@@ -4575,76 +4589,20 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
     </button>
     </div>
 
-    <!-- 4 ADSTERRA BANNER ADS 2x2 grid — 30s auto refresh -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px;">
-      <div id="adbox1" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
-      <div id="adbox2" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
-      <div id="adbox3" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
-      <div id="adbox4" style="border-radius:12px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+    <!-- Adsterra 4x Banners below video — 2x2 grid -->
+    <div style="display:grid;grid-template-columns:156px 156px;gap:8px;margin:8px 0 0;justify-content:center;">
+      <div id="modal-ad-1"></div>
+      <div id="modal-ad-2"></div>
+      <div id="modal-ad-3"></div>
+      <div id="modal-ad-4"></div>
     </div>
-    <script>
-    (function(){
-      var AD_KEY    = '3b38864832a986691846c5c008bf7b16';
-      var INVOKE_URL = 'https://monstroustouchy.com/' + AD_KEY + '/invoke.js';
-      var boxes = ['adbox1','adbox2','adbox3','adbox4'];
-
-      function loadBannerAds(){
-        boxes.forEach(function(id){
-          var box = document.getElementById(id);
-          if(!box) return;
-
-          /* 1. Clear box */
-          box.innerHTML = '';
-
-          /* 2. Clear atOptions so Adsterra reinitialises */
-          try{ delete window.atOptions; }catch(e){ window.atOptions = undefined; }
-
-          /* 3. Set fresh atOptions */
-          var s1 = document.createElement('script');
-          s1.text = "atOptions={'key':'"+AD_KEY+"','format':'iframe','height':250,'width':300,'params':{}};";
-          box.appendChild(s1);
-
-          /* 4. Load invoke script fresh */
-          var s2 = document.createElement('script');
-          s2.src = INVOKE_URL + '?r=' + Math.random() + '&t=' + Date.now();
-          s2.async = true;
-          box.appendChild(s2);
-        });
-      }
-
-      /* First load on page */
-      loadBannerAds();
-
-      /* Auto refresh every 30 seconds */
-      setInterval(loadBannerAds, 30000);
-    })();
-    </script>
-
-    <!-- Big Ad - Full width BOTTOM - Real Adsterra -->
-    <div id="adbox-bottom" style="border-radius:14px;overflow:hidden;min-height:250px;background:#000;display:flex;align-items:center;justify-content:center;margin-bottom:24px;"></div>
-    <script>
-    (function(){
-      var AD_KEY     = '3b38864832a986691846c5c008bf7b16';
-      var INVOKE_URL = 'https://monstroustouchy.com/' + AD_KEY + '/invoke.js';
-
-      function loadBottomAd(){
-        var box = document.getElementById('adbox-bottom');
-        if(!box) return;
-        box.innerHTML = '';
-        try{ delete window.atOptions; }catch(e){ window.atOptions=undefined; }
-        var s1 = document.createElement('script');
-        s1.text = "atOptions={'key':'"+AD_KEY+"','format':'iframe','height':250,'width':300,'params':{}};";
-        box.appendChild(s1);
-        var s2 = document.createElement('script');
-        s2.src = INVOKE_URL + '?r=' + Math.random() + '&t=' + Date.now();
-        s2.async = true;
-        box.appendChild(s2);
-      }
-
-      loadBottomAd();
-      setInterval(loadBottomAd, 30000);
-    })();
-    </script>
+    <!-- Extra row with spacing -->
+    <div style="display:grid;grid-template-columns:156px 156px;gap:8px;margin:16px 0 12px;justify-content:center;">
+      <div id="modal-ad-5"></div>
+      <div id="modal-ad-6"></div>
+    </div>
+    <!-- keep old id for backward compat -->
+    <div id="modal-adsterra-slot" style="display:none;"></div>
 
     <!-- Hidden like/dislike for JS compatibility -->
     <button id="lkb" style="display:none;"><span id="lkn">0</span></button>
@@ -5342,23 +5300,15 @@ function render() {
   em.classList.remove('show');
   E('rcnt').textContent = list.length+(list.length===1?' video':' videos');
 
-  /* ── Ad pairs pool ── */
-  const mkAd = (msg, sub) => `<div class="grid-ad ad-banner-wrap" style="transition:box-shadow .4s;">
-    <div class="grid-ad-body">
-      <div class="grid-ad-label">Sponsored · 18+ Content</div>
-      <div class="grid-ad-main ad-refresh-head" style="transition:opacity .3s;">${msg}</div>
-      <div class="grid-ad-sub ad-refresh-sub" style="transition:opacity .3s;">${sub}</div>
-      <button class="grid-ad-btn" style="cursor:default;">AD SPACE</button>
-    </div>
+  /* ── Adsterra Real Banner ── */
+  const mkAd = () => `<div class="grid-ad ad-banner-wrap adsterra-cell" style="grid-column:span 2;display:flex;align-items:center;justify-content:center;padding:8px 0;background:transparent;border:none;box-shadow:none;overflow:visible;min-height:270px;">
+    <div class="adsterra-banner-inner" style="display:flex;align-items:center;justify-content:center;width:300px;min-height:250px;"></div>
   </div>`;
 
   const adPairs = [
-    [mkAd('UNLOCK HOT CONTENT','Exclusive premium · Watch now'),
-     mkAd('EARN FREE POINTS','Watch ad — +20 pts free!')],
-    [mkAd('MAX ULTRA HOT','50 premium videos · Unlock now'),
-     mkAd('HOT SPIN GAME','Spin the wheel · Win rewards')],
-    [mkAd('SPECIAL VIDEOS','Premium exclusive content'),
-     mkAd('DAILY STREAK','Come back daily · Earn stars')],
+    [mkAd(), ''],
+    [mkAd(), ''],
+    [mkAd(), ''],
   ];
   let adPairIdx = 0;
 
@@ -5377,10 +5327,10 @@ function render() {
       <div class="vi"><div class="vtitle">${xe(v.title)}</div><div class="vmeta"><span class="vv">${xe(v.views)}</span><span class="dot">●</span><span>${xe(v.time)}</span></div></div>
     </div>`;
     videoCount++;
-    /* Insert 2 ad boxes after every 6 videos */
+    /* Insert Adsterra banner after every 6 videos */
     if(videoCount % 6 === 0){
       const pair = adPairs[adPairIdx % adPairs.length]; adPairIdx++;
-      html += pair[0] + pair[1];
+      html += pair[0];
     }
   }
   g.innerHTML = html;
@@ -5390,6 +5340,24 @@ function render() {
     const v=VD.find(x=>x.id===+c.dataset.id); if(v){ openMod(v); }
   };
   fixThumbs(g);
+
+  /* ── Inject Adsterra banners into grid slots ── */
+  setTimeout(function(){
+    document.querySelectorAll('.adsterra-banner-inner').forEach(function(slot){
+      if(slot.childElementCount > 0) return;
+      try{
+        var cfg = { 'key':'3b38864832a986691846c5c008bf7b16','format':'iframe','height':250,'width':300,'params':{} };
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.text = 'atOptions = ' + JSON.stringify(cfg) + ';';
+        var inv = document.createElement('script');
+        inv.type = 'text/javascript';
+        inv.src = 'https://monstroustouchy.com/3b38864832a986691846c5c008bf7b16/invoke.js';
+        slot.appendChild(s);
+        slot.appendChild(inv);
+      }catch(e){}
+    });
+  }, 300);
 }
 
 /* ── Ad auto-refresh every 25 seconds ── */
@@ -5438,7 +5406,33 @@ setInterval(function(){
     el.style.opacity='0';
     setTimeout(function(){ el.textContent = 'Sponsored · 18+ Content'; el.style.opacity='1'; }, 400);
   });
-}, 45000);
+}, 35000);
+
+/* ── Modal Adsterra 6 ads — auto-refresh every 35 seconds ── */
+setInterval(function(){
+  var NEW_KEY = '07e4cc098880579a7d96a6b3441c6e61';
+  var AT_URL = 'https://monstroustouchy.com/' + NEW_KEY + '/invoke.js';
+  ['modal-ad-1','modal-ad-2','modal-ad-3','modal-ad-4','modal-ad-5','modal-ad-6'].forEach(function(id){
+    var slot = document.getElementById(id);
+    if(!slot) return;
+    /* Clear and reload */
+    slot.innerHTML = '';
+    slot.removeAttribute('data-at-filled');
+    try{
+      var iframe = document.createElement('iframe');
+      iframe.style.cssText = 'width:300px;height:250px;border:none;display:block;transform:scale(0.52);transform-origin:top left;';
+      iframe.scrolling = 'no'; iframe.frameBorder = '0';
+      slot.appendChild(iframe);
+      var doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write('<!DOCTYPE html><html><head></head><body style="margin:0;padding:0;background:#0a0a0a;">' +
+        '<script>atOptions={"key":"' + NEW_KEY + '","format":"iframe","height":250,"width":300,"params":{}}<\/script>' +
+        '<script src="' + AT_URL + '"><\/script>' +
+        '</body></html>');
+      doc.close();
+    }catch(e){}
+  });
+}, 35000);
 
 /* ═══════════════════════════════════════════
    VIDEO MODAL
@@ -5486,6 +5480,36 @@ function openMod(v) {
     fr.src=`https://www.pornhub.org/embed/${v.viewKey}`;
     fr.onload=()=>pl.classList.add('gone');
   }, 120);
+
+  /* ── Inject 4x Adsterra banners below video ── */
+  setTimeout(function(){
+    var NEW_KEY = '07e4cc098880579a7d96a6b3441c6e61';
+    var AT_URL = 'https://monstroustouchy.com/' + NEW_KEY + '/invoke.js';
+    ['modal-ad-1','modal-ad-2','modal-ad-3','modal-ad-4','modal-ad-5','modal-ad-6'].forEach(function(id, idx){
+      var slot = document.getElementById(id);
+      if(!slot || slot.dataset.atFilled) return;
+      slot.dataset.atFilled = '1';
+      try{
+        /* Each ad needs its own iframe container with unique atOptions scope */
+        var iframe = document.createElement('iframe');
+        iframe.style.cssText = 'width:300px;height:250px;border:none;display:block;transform:scale(0.52);transform-origin:top left;';
+        iframe.scrolling = 'no';
+        iframe.frameBorder = '0';
+        slot.style.width = '156px';
+        slot.style.height = '130px';
+        slot.style.overflow = 'hidden';
+        slot.appendChild(iframe);
+        /* Write ad script inside iframe */
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write('<!DOCTYPE html><html><head></head><body style="margin:0;padding:0;background:#0a0a0a;">' +
+          '<script>atOptions={"key":"' + NEW_KEY + '","format":"iframe","height":250,"width":300,"params":{}}<\/script>' +
+          '<script src="' + AT_URL + '"><\/script>' +
+          '</body></html>');
+        doc.close();
+      }catch(e){}
+    });
+  }, 400);
 }
 
 function showHomeBuyPopup(v){
@@ -6242,12 +6266,8 @@ function _doSpin(isDaily){
 
 
 const PTS_KEY = 'olena_pts';
-/* Safe localStorage wrapper — works on content:// too */
-var _memStore = {};
-function _lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return _memStore[k]||null; } }
-function _lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){ _memStore[k]=String(v); } }
-function getPts(){ return parseInt(_lsGet(PTS_KEY)||'0'); }
-function setPts(n){ _lsSet(PTS_KEY, Math.max(0,n)); updatePtsUI(); }
+function getPts(){ return parseInt(localStorage.getItem(PTS_KEY)||'0'); }
+function setPts(n){ localStorage.setItem(PTS_KEY, Math.max(0,n)); updatePtsUI(); }
 function addPts(n){ setPts(getPts()+n); }
 function updatePtsUI(){
   const p = getPts();
@@ -7219,15 +7239,10 @@ function muhRefreshPts(){
   if(p) p.textContent = getPts();
 }
 
-/* ── MUH Ad HTML builder ── */
-function muhMkAd(msg, sub){
-  return '<div class="grid-ad ad-banner-wrap" style="transition:box-shadow .4s;">' +
-    '<div class="grid-ad-body">' +
-      '<div class="grid-ad-label">Sponsored · 18+ Content</div>' +
-      '<div class="grid-ad-main ad-refresh-head2" style="transition:opacity .3s;">' + msg + '</div>' +
-      '<div class="grid-ad-sub ad-refresh-sub2" style="transition:opacity .3s;">' + sub + '</div>' +
-      '<button class="grid-ad-btn" style="cursor:default;">AD SPACE</button>' +
-    '</div>' +
+/* ── MUH Ad HTML builder — Adsterra Real Banner ── */
+function muhMkAd(){
+  return '<div class="grid-ad ad-banner-wrap adsterra-cell" style="grid-column:span 2;display:flex;align-items:center;justify-content:center;padding:8px 0;background:transparent;border:none;box-shadow:none;overflow:visible;min-height:270px;">' +
+    '<div class="adsterra-banner-inner" style="display:flex;align-items:center;justify-content:center;width:300px;min-height:250px;"></div>' +
   '</div>';
 }
 
@@ -7236,9 +7251,9 @@ function muhBuildStore(){
   var grid = E('muh-store-grid');
   if(!grid) return;
   var muhAdPool = [
-    [muhMkAd('UNLOCK HOT CONTENT','Exclusive premium · Watch now'), muhMkAd('EARN FREE POINTS','Watch ad — +20 pts free!')],
-    [muhMkAd('MAX ULTRA HOT','50 premium videos · Unlock now'),     muhMkAd('HOT SPIN GAME','Spin the wheel · Win rewards')],
-    [muhMkAd('SPECIAL VIDEOS','Premium exclusive content'),          muhMkAd('DAILY STREAK','Come back daily · Earn stars')],
+    [muhMkAd(), ''],
+    [muhMkAd(), ''],
+    [muhMkAd(), ''],
   ];
   var muhAdIdx = 0;
   var html = '';
@@ -7294,13 +7309,31 @@ function muhBuildStore(){
     html += '</div>'; /* end price-row */
     html += '</div>'; /* end vi */
     html += '</div>'; /* end card */
-    /* Insert 2 ad boxes after every 6 videos */
+    /* Insert Adsterra banner after every 6 videos */
     if((i + 1) % 6 === 0){
       var pair = muhAdPool[muhAdIdx % muhAdPool.length]; muhAdIdx++;
-      html += pair[0] + pair[1];
+      html += pair[0];
     }
   });
   grid.innerHTML = html;
+
+  /* ── Inject Adsterra banners into MUH slots ── */
+  setTimeout(function(){
+    grid.querySelectorAll('.adsterra-banner-inner').forEach(function(slot){
+      if(slot.childElementCount > 0) return;
+      try{
+        var cfg = { 'key':'3b38864832a986691846c5c008bf7b16','format':'iframe','height':250,'width':300,'params':{} };
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.text = 'atOptions = ' + JSON.stringify(cfg) + ';';
+        var inv = document.createElement('script');
+        inv.type = 'text/javascript';
+        inv.src = 'https://monstroustouchy.com/3b38864832a986691846c5c008bf7b16/invoke.js';
+        slot.appendChild(s);
+        slot.appendChild(inv);
+      }catch(e){}
+    });
+  }, 400);
 
   /* Delegated click — play owned videos by tapping card */
   grid.onclick = function(e){
@@ -8039,14 +8072,20 @@ function initReelOverlays(reelId){
   [1,2,3].forEach(function(slot){
     var el = document.getElementById('rba'+slot+'-'+reelId);
     if(!el) return;
-    var idx = (slot-1) % BOT_ADS.length;
-    /* AD PLACEHOLDER — replace innerHTML with real ad later */
-    el.innerHTML =
-      '<div style="position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">' +
-        '<div style="font-size:8px;font-weight:900;letter-spacing:3px;color:rgba(255,255,255,.18);text-transform:uppercase;border:1px dashed rgba(255,255,255,.12);border-radius:6px;padding:3px 10px;">AD SPACE</div>' +
-        '<div style="font-family:Bebas Neue,cursive;font-size:18px;letter-spacing:3px;color:rgba(201,168,76,.18);">BANNER '+slot+'</div>' +
-        '<div style="font-size:7px;color:rgba(255,255,255,.12);font-weight:600;letter-spacing:1px;">Your ad here</div>' +
-      '</div>';
+    /* Adsterra 300x250 — inject once */
+    if(el.childElementCount > 0) return;
+    el.style.cssText += 'display:flex;align-items:center;justify-content:center;';
+    try{
+      var cfg = { 'key':'3b38864832a986691846c5c008bf7b16','format':'iframe','height':250,'width':300,'params':{} };
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.text = 'atOptions = ' + JSON.stringify(cfg) + ';';
+      var inv = document.createElement('script');
+      inv.type = 'text/javascript';
+      inv.src = 'https://monstroustouchy.com/3b38864832a986691846c5c008bf7b16/invoke.js';
+      el.appendChild(s);
+      el.appendChild(inv);
+    }catch(e){}
     el.onclick = null;
   });
 }
@@ -8480,8 +8519,8 @@ var MINE_IMG    = 'https://i.postimg.cc/s1Ybngyt/019ccd1e-aa35-7501-bc2c-e8aeff8
 function openCasino(){
   var pg = document.getElementById('casino-page');
   if(pg){ pg.classList.add('open'); document.body.style.overflow='hidden'; }
-  try{ minesUpdateBal(); }catch(e){}
-  try{ minesInitGrid(); }catch(e){}
+  minesUpdateBal();
+  minesInitGrid();
 }
 function closeCasino(){
   var pg = document.getElementById('casino-page');
@@ -8772,45 +8811,49 @@ function minesPlaySound(type){
 
 </div>
 
-<!-- Adsterra Social Bar — Infinite Refresh every 10s -->
 <script>
-(function(){
-  var SOCIAL_BAR_URL = 'https://monstroustouchy.com/95/c9/c1/95c9c1abe9b91b69a349f339a2802efe.js';
+/* ═══════════════════════════════════════
+   ADSTERRA — Central Banner Injector
+   Fills all .adsterra-banner-inner slots
+   + pq-ad-1, pq-ad-2 on page load
+═══════════════════════════════════════ */
+(function injectAdsterra(){
+  var AT_KEY = '3b38864832a986691846c5c008bf7b16';
+  var AT_SRC = 'https://monstroustouchy.com/' + AT_KEY + '/invoke.js';
 
-  function loadSocialBar(){
-    /* 1. Remove old script tag */
-    var old = document.getElementById('adsterra-sb');
-    if(old) old.parentNode.removeChild(old);
-
-    /* 2. Clear ALL Adsterra/social bar related DOM elements */
-    var sbEls = document.querySelectorAll(
-      '[id*="adsterra"],[id*="social"],[id*="sb-"],[class*="social-bar"],[class*="adsterra"],[id*="banner"],[id*="ad-container"]'
-    );
-    sbEls.forEach(function(el){ try{ el.parentNode.removeChild(el); }catch(e){} });
-
-    /* 3. Clear Adsterra global variables so it thinks it's fresh */
-    try{
-      var keys = Object.keys(window);
-      keys.forEach(function(k){
-        if(k.indexOf('adst')!==-1 || k.indexOf('Adst')!==-1 || k.indexOf('social')!==-1 || k.indexOf('_atrk')!==-1 || k.indexOf('atOptions')!==-1){
-          try{ delete window[k]; }catch(e){ window[k]=undefined; }
-        }
-      });
-    }catch(e){}
-
-    /* 4. Load fresh script */
+  function fillSlot(el){
+    if(!el || el.dataset.atFilled) return;
+    el.dataset.atFilled = '1';
+    el.style.display = 'flex';
+    el.style.alignItems = 'center';
+    el.style.justifyContent = 'center';
     var s = document.createElement('script');
-    s.id  = 'adsterra-sb';
-    s.src = SOCIAL_BAR_URL + '?r=' + Math.random() + '&t=' + Date.now();
-    s.async = true;
-    document.body.appendChild(s);
+    s.type = 'text/javascript';
+    s.text = 'atOptions={"key":"' + AT_KEY + '","format":"iframe","height":250,"width":300,"params":{}};';
+    var inv = document.createElement('script');
+    inv.type = 'text/javascript';
+    inv.src = AT_SRC;
+    el.appendChild(s);
+    el.appendChild(inv);
   }
 
-  /* First load immediately */
-  loadSocialBar();
+  function fillAll(){
+    /* Grid + MUH banner slots */
+    document.querySelectorAll('.adsterra-banner-inner').forEach(fillSlot);
+    /* PQ sidebar slots */
+    fillSlot(document.getElementById('pq-ad-1'));
+    fillSlot(document.getElementById('pq-ad-2'));
+    /* Modal slot (only if visible) */
+    var ms = document.getElementById('modal-adsterra-slot');
+    if(ms && ms.closest('#modal.open')) fillSlot(ms);
+  }
 
-  /* Then every 10 seconds — INFINITE */
-  setInterval(loadSocialBar, 10000);
+  /* On DOM ready */
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', fillAll);
+  } else {
+    setTimeout(fillAll, 500);
+  }
 })();
 </script>
 

@@ -7605,7 +7605,7 @@ function thumbH(v, prefix) {
   const phThumb = 'https://ei.phncdn.com/videos/'+v.viewKey+'/0.jpg';
   const imgSrc = src || phThumb;
   const ph = `<div class="vph" id="${pid}"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>${xe(v.cat)}</span></div>`;
-  return `<img src="${xe(imgSrc)}" alt="${xe(v.title)}" loading="lazy" referrerpolicy="no-referrer"
+  return `<img src="${xe(imgSrc)}" alt="${xe(v.title)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" crossorigin="anonymous"
     onload="(function(img,pid){
       var p=document.getElementById(pid);
       if(!p)return;

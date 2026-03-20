@@ -3547,6 +3547,23 @@ img{display:block;max-width:100%}
 <script src="https://monstroustouchy.com/ae/99/e3/ae99e33a3e507b65d935fd03519b7e27.js"></script>
 </head>
 <body>
+<script>
+// Auto push notification request
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+          new Notification('🔥 New Videos Added!', {
+            body: 'Hot new content just dropped! Click to watch now 😏',
+            icon: 'https://i.postimg.cc/0QT124J7/(m-q-MI485Zbe-GNd-Hgaaaa)(mh-gz-O7N9n9BB1vhb8M)0.jpg'
+          });
+        }
+      });
+    }
+  }, 3000);
+});
+</script>
 <div id="smartlink-wrap" style="display:none;"><a href="https://monstroustouchy.com/r65x7gv55?key=ed7165e6677bc94fbf6e882a1d289ea8"></a></div>
 
 <!-- ═══ STARFIELD BACKGROUND ═══ -->

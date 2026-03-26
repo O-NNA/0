@@ -1071,7 +1071,9 @@ body{
 }
 
 /* 3-col aspect ratio — slightly taller for portrait-ish feel */
-#grid .vt{ aspect-ratio:16/10 !important; }
+#grid .vt{ aspect-ratio:16/10 !important; background:#0d0d0d !important; }
+#grid img{ display:none !important; }
+#grid .vi{ display:none !important; }
 
 /* Card info area — slim for 3-col */
 #grid .vi{
@@ -4751,6 +4753,7 @@ function showLevelLock(label, curLvl){ openPQPage(label); }
         </div>
         <button class="mov-buy-btn" id="mov-lock-buy-btn" onclick="movBuyFromLock()">UNLOCK NOW</button>
       </div>
+      <!-- VIDEO SLOT 2: HOT MOVIES — embed link yahan aayega -->
       <iframe id="movie-iframe" src="" allowfullscreen allow="autoplay;fullscreen;picture-in-picture;encrypted-media" referrerpolicy="no-referrer" scrolling="no" frameborder="0" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation allow-pointer-lock"></iframe>
     </div>
     <!-- Watch timer bar -->
@@ -5574,7 +5577,138 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
 <main id="main">
 
 
-<!-- HRZ STRIP -->
+<!-- FEATURED VIDEO — Premium O LENA Player -->
+<style>
+#featured-wrap{
+  width:100%;background:#000;margin-bottom:10px;
+  position:relative;overflow:hidden;
+  border-bottom:2px solid rgba(255,153,0,.3);
+}
+#featured-thumb-area{
+  position:relative;width:100%;padding-top:56.25%;
+  background:#0a0a0a;overflow:hidden;cursor:pointer;
+}
+#featured-bg-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  filter:brightness(.85) contrast(1.08) saturate(1.1);
+  transition:transform .3s;
+}
+#featured-thumb-area:active #featured-bg-img{ transform:scale(1.03); }
+/* Dark gradient overlay */
+#featured-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.0) 40%,rgba(0,0,0,.7) 100%);
+}
+/* Live badge */
+#featured-live{
+  position:absolute;top:10px;left:10px;z-index:5;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(255,0,60,.9);border-radius:5px;padding:3px 8px;
+  font-family:'Bebas Neue',cursive;font-size:11px;letter-spacing:2px;color:#fff;
+  box-shadow:0 0 12px rgba(255,0,60,.6);
+  animation:feat-live-flicker 1.8s ease-in-out infinite;
+}
+#featured-live-dot{
+  width:6px;height:6px;border-radius:50%;background:#fff;
+  animation:feat-live-flicker 1s ease-in-out infinite;
+}
+@keyframes feat-live-flicker{0%,100%{opacity:1}50%{opacity:.7}}
+/* HD badge */
+#featured-hd{
+  position:absolute;top:10px;right:10px;z-index:5;
+  background:rgba(255,153,0,.92);border-radius:4px;padding:2px 8px;
+  font-family:'Bebas Neue',cursive;font-size:11px;letter-spacing:1px;color:#000;font-weight:900;
+}
+/* Play button — O LENA branded */
+#featured-play-btn{
+  position:absolute;inset:0;z-index:4;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+}
+#featured-play-circle{
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#ff9900,#ffb84d);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 6px rgba(255,153,0,.2),0 0 30px rgba(255,153,0,.5);
+  transition:transform .18s,box-shadow .18s;
+}
+#featured-thumb-area:active #featured-play-circle{
+  transform:scale(.9);
+  box-shadow:0 0 0 3px rgba(255,153,0,.3),0 0 16px rgba(255,153,0,.4);
+}
+/* O LENA tag inside play button */
+#featured-play-label{
+  font-family:'Bebas Neue',cursive;font-size:10px;letter-spacing:2px;
+  color:rgba(255,255,255,.8);
+  background:rgba(0,0,0,.5);padding:2px 10px;border-radius:100px;
+}
+/* Bottom info bar */
+#featured-info{
+  position:absolute;bottom:0;left:0;right:0;z-index:5;
+  padding:8px 12px 10px;
+  background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);
+}
+#featured-title-txt{
+  font-family:'Bebas Neue',cursive;font-size:15px;letter-spacing:2px;
+  color:#fff;line-height:1.2;margin-bottom:3px;
+}
+#featured-meta-row{
+  display:flex;align-items:center;gap:8px;
+}
+.feat-meta-chip{
+  font-size:8px;font-weight:700;letter-spacing:.5px;
+  color:rgba(255,255,255,.55);display:flex;align-items:center;gap:3px;
+}
+/* O LENA watermark bottom right */
+#featured-brand{
+  position:absolute;bottom:10px;right:10px;z-index:6;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,153,0,.4);
+  border-radius:6px;padding:3px 8px;pointer-events:none;
+}
+</style>
+
+
+
+
+
+<!-- Featured Video Player -->
+<div id="featured-wrap" style="background:#000;width:100%;overflow:hidden;margin-bottom:10px;border-bottom:2px solid rgba(255,153,0,.3);">
+  <!-- Ad above -->
+  <div style="width:100%;background:#0a0a0a;overflow:hidden;">
+    <ins class="adsbyinvoke" data-key="3b38864832a986691846c5c008bf7b16" data-format="auto" style="display:block;min-height:50px;"></ins>
+  </div>
+  <!-- Player -->
+  <div style="position:relative;width:100%;padding-top:56.25%;background:#000;">
+    <div style="position:absolute;top:8px;left:8px;z-index:10;background:linear-gradient(135deg,#ff9900,#ff4400);color:#000;font-size:9px;font-weight:900;letter-spacing:1.5px;padding:3px 10px;border-radius:100px;">🔥 FEATURED</div>
+    <div style="position:absolute;top:8px;right:8px;z-index:10;background:rgba(0,0,0,.7);border:1px solid rgba(255,153,0,.5);color:#ff9900;font-size:9px;font-weight:900;padding:2px 8px;border-radius:6px;">HD</div>
+    <iframe
+      src="https://myvidplay.com/e/z3dgpsuxu3kq"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+      allowfullscreen
+      allow="autoplay;fullscreen;encrypted-media;picture-in-picture"
+      scrolling="no"
+      frameborder="0"
+    ></iframe>
+  </div>
+  <!-- Title -->
+  <div style="padding:7px 12px;background:#111;display:flex;align-items:center;gap:8px;border-bottom:1px solid #1e1e1e;">
+    <span style="font-family:'Bebas Neue',cursive;font-size:14px;letter-spacing:1.5px;color:#f0f0f0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🔥 POV VIRTUAL SEX — FULL HD</span>
+    <span style="font-size:8px;color:rgba(255,153,0,.7);font-weight:700;flex-shrink:0;">★ O LENA</span>
+  </div>
+  <!-- Ad below -->
+  <div style="width:100%;background:#0a0a0a;overflow:hidden;">
+    <ins class="adsbyinvoke" data-key="3b38864832a986691846c5c008bf7b16" data-format="auto" style="display:block;min-height:50px;"></ins>
+  </div>
+</div>
+
+<script>
+function openFeaturedVideo(){
+  var v={id:0,viewKey:'https://myvidplay.com/e/z3dgpsuxu3kq',thumbnail:'',title:'POV Virtual Sex — Hot Exclusive Full HD',cat:'Featured',views:'9.9M',time:'Now',duration:'14:32',mood:'intense'};
+  openMod(v);
+}
+</script>
+
 <div id="hrz-section">
   <div id="hrz-header">
     <div>
@@ -5706,16 +5840,48 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
       </div>
     </div>
 
+    <!-- VIDEO SLOT 3: MAIN MODAL PLAYER — embed link yahan aayega -->
     <iframe id="vf"
-      allow="autoplay;encrypted-media"
+      allow="autoplay;encrypted-media;fullscreen"
       allowfullscreen
       scrolling="no"
-      sandbox="allow-forms allow-scripts allow-same-origin allow-pointer-lock allow-presentation"
+      sandbox="allow-forms allow-scripts allow-same-origin allow-pointer-lock allow-presentation allow-popups"
       referrerpolicy="no-referrer-when-downgrade"
       loading="eager"
       title="Video Player"
     ></iframe>
-    <!-- Pornhub branding bar removed -->
+    <!-- TOP overlay — covers xHamster title bar -->
+    <div style="position:absolute;top:0;left:0;right:0;height:18%;z-index:6;background:#000;pointer-events:auto;cursor:default;"></div>
+    <!-- BOTTOM overlay — covers 'Watch on xHamster' bar -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:15%;z-index:6;background:#000;pointer-events:auto;cursor:default;"></div>
+    <!-- LEFT blocker -->
+    <div style="position:absolute;top:18%;left:0;width:8%;height:67%;z-index:6;pointer-events:auto;cursor:default;"></div>
+    <!-- RIGHT blocker -->
+    <div style="position:absolute;top:18%;right:0;width:8%;height:67%;z-index:6;pointer-events:auto;cursor:default;"></div>
+    <!-- CENTRE PLAY SHIELD — blocks xhamster play button, shows our own branded play -->
+    <div id="vf-ctr-shield"
+      style="position:absolute;top:18%;left:8%;right:8%;height:67%;z-index:7;cursor:pointer;display:flex;align-items:center;justify-content:center;background:transparent;"
+      onclick="vfCtrPlay()">
+      <!-- Branded play button — visible before autoplay kicks in -->
+      <div id="vf-ctr-btn"
+        style="width:72px;height:72px;border-radius:50%;
+               background:rgba(0,0,0,.55);
+               border:3px solid rgba(255,255,255,.9);
+               display:flex;align-items:center;justify-content:center;
+               box-shadow:0 0 40px rgba(0,0,0,.7);
+               transition:transform .15s,opacity .3s;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><polygon points="8,5 20,12 8,19"/></svg>
+      </div>
+    </div>
+    <!-- O LENA watermark -->
+    <div style="position:absolute;top:4px;left:8px;z-index:9;pointer-events:none;display:flex;align-items:center;gap:4px;">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="#ff9900"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span style="font-family:'Bebas Neue',cursive;font-size:12px;color:#ff9900;letter-spacing:2px;">O LENA</span>
+    </div>
+    <!-- HD badge -->
+    <div style="position:absolute;top:4px;right:8px;z-index:9;pointer-events:none;background:rgba(255,153,0,.9);border-radius:3px;padding:1px 6px;">
+      <span style="font-family:'Bebas Neue',cursive;font-size:10px;color:#000;letter-spacing:1px;font-weight:900;">HD</span>
+    </div>
     <!-- WATCH PROGRESS BAR — real-time fill while watching -->
     <div id="watch-progress-wrap" style="position:absolute;bottom:0;left:0;right:0;z-index:6;height:3px;background:rgba(0,0,0,.4);">
       <div id="watch-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#bc13fe,#ff00ff);border-radius:0 2px 2px 0;transition:width .8s linear;box-shadow:0 0 6px rgba(188,19,254,.6);"></div>
@@ -5905,14 +6071,7 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
       </div>
     </div>
 
-    <!-- ══ RELATED VIDEOS ══ -->
-    <div id="hub-related-section" style="background:#000;">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px 6px;">
-        <span style="font-family:'Bebas Neue',cursive;font-size:14px;letter-spacing:3px;color:#e0e0e0;">RELATED VIDEOS</span>
-        <span id="hub-rel-count" style="font-size:11px;color:#555;"></span>
-      </div>
-      <div id="hub-related-scroll"></div>
-    </div>
+    <!-- Related videos removed -->
 
     <!-- ══ AD SLOT 2 — 2 side-by-side ══ -->
     <div style="padding:18px 8px 8px;background:#000;border-top:1px solid #111;position:relative;">
@@ -6463,7 +6622,7 @@ window.addEventListener('orientationchange', function(){ setTimeout(resizeMovieI
       allowfullscreen="true"
       allow="autoplay;fullscreen;encrypted-media;picture-in-picture"
       referrerpolicy="no-referrer-when-downgrade"
-      sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation"
+      sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-presentation allow-popups"
       style="width:100%;aspect-ratio:16/9;border:none;background:#000;display:block;flex-shrink:0;"
     ></iframe>
     <video id="anime-modal-video"
@@ -7438,112 +7597,8 @@ function siF(n){ return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(0)+
    VIDEO DATA — 5 NEW VIDEOS
 ═══════════════════════════════════════════ */
 var VD = [
-  {id:1, viewKey:'6990a3cc59a28', thumbnail:'https://i.postimg.cc/FHPFMNFq/019c5d3b-9dca-7daf-98d2-c4e755f4cc3b.jpg', title:'Hot Scene Full HD #1', cat:'New', views:'1.4M', time:'1h ago', duration:'14:32', mood:'intense'},
-  {id:2, viewKey:'68374dff45f80', thumbnail:'https://i.postimg.cc/BnhZr4Zd/(m-q-QN-VJ0be-GNd-Hgaaaa)(mh-Yk09c-LEIKVR6-6-j)0.jpg', title:'Viral Clip Indian Girl', cat:'Viral', views:'2.1M', time:'3h ago', duration:'12:18', mood:'wild'},
-  {id:3, viewKey:'67e07e75ea9dc', thumbnail:'https://i.postimg.cc/3xLrsYrz/(m-q-MNMJ-Zbe-GNd-Hgaaaa)(mh-G0m7f-HYRLalrxz-GM)0.jpg', title:'Desi Housewife Secret Video', cat:'Desi', views:'980K', time:'5h ago', duration:'18:45', mood:'intense'},
-  {id:4, viewKey:'66d641e1dae9b', thumbnail:'https://i.postimg.cc/jS8qptqm/(m-q-WLGUTZbe-GNd-Hgaaaa)(mh-it-Ekf2J3Dcj9smo2)0.jpg', title:'Trending Couple MMS Leaked', cat:'Trending', views:'3.3M', time:'6h ago', duration:'09:55', mood:'wild'},
-  {id:5, viewKey:'693b53728721e', thumbnail:'https://i.postimg.cc/pL0VwRVw/019b0fe7-e9f3-7581-a7a5-a7a6f66dfcbd.jpg', title:'O LENA Exclusive Hot Upload', cat:'New', views:'760K', time:'8h ago', duration:'22:10', mood:'intense'},
-  {id:6, viewKey:'66100440463a9', thumbnail:'https://i.postimg.cc/T3k2zfY8/(m-q-R6UGHZbe-GNd-Hgaaaa)(mh-F1b-IUPg-u-JLE4q-Ds)0.jpg', title:'Desi Girl Viral MMS Full', cat:'Viral', views:'4.2M', time:'10h ago', duration:'11:03', mood:'wild'},
-  {id:7, viewKey:'68effbfc103c5', thumbnail:'https://i.postimg.cc/FK7Fm81D/0199e9aa-97d8-717d-bb2b-688faa928073.jpg', title:'Hot Babe Full Uncut HD', cat:'Trending', views:'1.8M', time:'12h ago', duration:'16:27', mood:'intense'},
-  {id:8, viewKey:'69bbef8f969b6', thumbnail:'https://i.postimg.cc/mrtZRJhX/original-42533065.jpg', title:'New Upload Premium Quality', cat:'New', views:'530K', time:'14h ago', duration:'08:52', mood:'chill'},
-  {id:9, viewKey:'68e5b95b3c382', thumbnail:'https://i.postimg.cc/tgYRyw7v/original-25341305.jpg', title:'Desi Beauty Private Clip', cat:'Desi', views:'2.7M', time:'16h ago', duration:'20:14', mood:'wild'},
-  {id:10, viewKey:'68c6e5ac1cdd9', thumbnail:'https://i.postimg.cc/N05GYSLn/019949c1-c4a6-7e1a-933b-3c8fc63b4c24.jpg', title:'Viral Couple Full HD Original', cat:'Viral', views:'5.1M', time:'18h ago', duration:'13:40', mood:'intense'},
-  {id:11, viewKey:'67dc6226e1071', thumbnail:'https://i.postimg.cc/wB7xHZ3Z/(m-q9VVNO0be-GNd-Hgaaaa)(mh-n-Xgubq-YMw-YIg-Gb-X9)0.jpg', title:'Indian Beauty Secret Video', cat:'Desi', views:'1.1M', time:'20h ago', duration:'17:05', mood:'romantic'},
-  {id:12, viewKey:'6984706d261bb', thumbnail:'https://i.postimg.cc/43m4Zqnj/original-38421965.jpg', title:'Top Trending Most Watched', cat:'Trending', views:'6.3M', time:'22h ago', duration:'25:18', mood:'wild'},
-  {id:13, viewKey:'69a5817770250', thumbnail:'https://i.postimg.cc/vmc8MkcR/019cafee-4a1f-756e-b0f5-570aede92dea.jpg', title:'Exclusive O LENA Hot Scene', cat:'New', views:'890K', time:'1d ago', duration:'10:33', mood:'intense'},
-  {id:14, viewKey:'6703f2696861a', thumbnail:'https://i.postimg.cc/nLCVZgCf/(m-q-WIVTWZbe-GNd-Hgaaaa)(mh-l9rt-D3HCYZp-a4pp)0.jpg', title:'Desi Couple Private Night', cat:'Desi', views:'1.5M', time:'1d ago', duration:'19:22', mood:'romantic'},
-  {id:15, viewKey:'ph61bf682ae2b4b', thumbnail:'https://i.postimg.cc/25VjmMVD/(m-q7TIM8Wbe-GNd-Hgaaaa)(mh-nn64M1H2A2g1ULm-Q)0.jpg', title:'Hot Girl Viral Clip Uncut', cat:'Viral', views:'3.0M', time:'1d ago', duration:'15:47', mood:'wild'},
-  {id:16, viewKey:'698257438a38b', thumbnail:'https://i.postimg.cc/XvpN3mp3/019c2a59-3610-7a8e-83b5-d1ff725f84ed.jpg', title:'New Desi Upload HD Quality', cat:'New', views:'420K', time:'1d ago', duration:'11:58', mood:'intense'},
-  {id:17, viewKey:'ph62e799781b817', thumbnail:'https://i.postimg.cc/R0NC9yNV/(m-q-L5-KXXbe-GNd-Hgaaaa)(mh-oxtbxn6TPz-Jt-J1jo)0.jpg', title:'Popular Trending Scene Week', cat:'Trending', views:'2.4M', time:'2d ago', duration:'23:09', mood:'wild'},
-  {id:18, viewKey:'692cd03c3c73d', thumbnail:'https://i.postimg.cc/Lsn4Rwn2/rs-fit-480-270.jpg', title:'Leaked Private Video Hot HD', cat:'Viral', views:'7.8M', time:'2d ago', duration:'08:14', mood:'intense'},
-  {id:19, viewKey:'6674861627410', thumbnail:'https://i.postimg.cc/zfVD56VJ/(m-q43J4OZbe-GNd-Hgaaaa)(mh-rz2NA-c-Pl-Vw-Oo-C8S)0.jpg', title:'Desi Babe Full Uncut Scene', cat:'Desi', views:'1.9M', time:'2d ago', duration:'16:35', mood:'wild'},
-  {id:20, viewKey:'ph63833704303ae', thumbnail:'https://i.postimg.cc/FK7Fm87r/(m-q-NPS05Xbe-GNd-Hgaaaa)(mh-a-s-FX-u6dy3vo-Mn)0.jpg', title:'O LENA Premium Exclusive', cat:'New', views:'650K', time:'2d ago', duration:'21:02', mood:'chill'},
-  {id:21, viewKey:'ph61915584b8df9', thumbnail:'https://i.postimg.cc/zfVD56VG/(m-q-HW2K5Wbe-GNd-Hgaaaa)(mh-QXWea-RLDNV-08z-Jm)0.jpg', title:'Indian Student Hidden Video', cat:'Viral', views:'4.5M', time:'3d ago', duration:'12:48', mood:'wild'},
-  {id:22, viewKey:'ph62f8d5e049d03', thumbnail:'https://i.postimg.cc/g0ncdQnc/(m-q-Q1TYVXbe-GNd-Hgaaaa)(mh-3No-fb1V4ul-Zjg21)0-(1).jpg', title:'Desi Beauty Full Uncut HD', cat:'Desi', views:'1.2M', time:'3d ago', duration:'14:20', mood:'intense'},
-  {id:23, viewKey:'6973b0fc75d07', thumbnail:'https://i.postimg.cc/g0ncdQnc/(m-q-Q1TYVXbe-GNd-Hgaaaa)(mh-3No-fb1V4ul-Zjg21)0-(1).jpg', title:'Viral Hot Scene 2024', cat:'Viral', views:'3.8M', time:'3d ago', duration:'09:30', mood:'wild'},
-  {id:24, viewKey:'ph604e59db2b3c6', thumbnail:'https://i.postimg.cc/0Nb5xFbj/019bec24-644c-739b-a4e1-f89c2ef95ff0.png', title:'Premium Exclusive Couple HD', cat:'Trending', views:'2.0M', time:'4d ago', duration:'18:10', mood:'romantic'},
-  {id:25, viewKey:'ph616c55f8ee6d0', thumbnail:'https://i.postimg.cc/XvpN3mpp/(m-q-QI4-KWbe-GNd-Hgaaaa)(mh-UH0w-Pf9p-UAo-Oen7D)0.jpg', title:'Indian Girl Private Clip', cat:'Desi', views:'1.6M', time:'4d ago', duration:'20:55', mood:'wild'},
-  {id:26, viewKey:'ph5d9870c85616d', thumbnail:'https://i.postimg.cc/yNk6BtkW/(m-q-IL62Wbe-GNd-Hgaaaa)(mh-rxng-Fi-Uhf-SUQQE9N)0.jpg', title:'Desi Housewife Hot Scene', cat:'Desi', views:'900K', time:'4d ago', duration:'13:15', mood:'intense'},
-  {id:27, viewKey:'ph5dd68a01bbd15', thumbnail:'https://i.postimg.cc/vmkYmhVM/(m-e-GNd-Hgaaaa)(mh-v-Ujuw7A7da6F2Tm-Y)6.jpg', title:'Trending Hot Upload New', cat:'New', views:'2.3M', time:'5d ago', duration:'17:40', mood:'wild'},
-  {id:28, viewKey:'ph6210bdea746cc', thumbnail:'https://i.postimg.cc/hG6DGsdP/(m-e-GNd-Hgaaaa)(mh-5PFXqsq-Io-QO3IQr-S)16.jpg', title:'Viral Couple Night Scene', cat:'Viral', views:'1.7M', time:'5d ago', duration:'11:25', mood:'romantic'},
-  {id:29, viewKey:'ph612239736b934', thumbnail:'https://i.postimg.cc/5tT4tgC2/(m-q1U7KHXbe-GNd-Hgaaaa)(mh-Hya-zq-E7iri-Gjq-YX)0.jpg', title:'Premium Desi Content HD', cat:'Trending', views:'4.0M', time:'5d ago', duration:'22:50', mood:'intense'},
-  {id:30, viewKey:'ph6135005a97004', thumbnail:'https://i.postimg.cc/W4CN48k4/(m-q-V64KYWbe-GNd-Hgaaaa)(mh-O1s5q-Fz-Zplbe-XUl-)0.jpg', title:'Hot Scene Exclusive O LENA', cat:'New', views:'750K', time:'6d ago', duration:'08:38', mood:'chill'},
-  {id:31, viewKey:'ph62027b6495bab', thumbnail:'https://i.postimg.cc/XvpN3mpp/(m-q-QI4-KWbe-GNd-Hgaaaa)(mh-UH0w-Pf9p-UAo-Oen7D)0.jpg', title:'Desi Girl Uncut Full HD', cat:'Desi', views:'2.9M', time:'6d ago', duration:'15:20', mood:'wild'},
-  {id:32, viewKey:'ph6314ceafa5f0d', thumbnail:'https://i.postimg.cc/Pq9XqywC/(m-q6VYSZWbe-GNd-Hgaaaa)(mh-G1Vvf2Yp-PRR9822I)0-(1).jpg', title:'Viral Most Watched Clip', cat:'Viral', views:'5.5M', time:'6d ago', duration:'24:05', mood:'intense'},
-  {id:33, viewKey:'ph6210bdea746cc', thumbnail:'https://i.postimg.cc/TPFdP0DL/(m-q9LVSIXbe-GNd-Hgaaaa)(mh-k-QG-CZu-Gf-Flk-L5j6)0.jpg', title:'Hot Trending Scene Week', cat:'Trending', views:'1.3M', time:'1w ago', duration:'10:45', mood:'wild'},
-  {id:34, viewKey:'ph60aa9dc6d1ca1', thumbnail:'https://i.postimg.cc/vmkYmhVx/(m-q7NJQXXbe-GNd-Hgaaaa)(mh-Lb-Am6NH4NPC-Li-PX)0.jpg', title:'Exclusive Desi Beauty HD', cat:'Desi', views:'3.1M', time:'1w ago', duration:'19:55', mood:'romantic'},
-  {id:35, viewKey:'ph62495d097539e', thumbnail:'https://i.postimg.cc/5tT4tgC2/(m-q1U7KHXbe-GNd-Hgaaaa)(mh-Hya-zq-E7iri-Gjq-YX)0.jpg', title:'Premium Hot Video 2024', cat:'New', views:'680K', time:'1w ago', duration:'12:30', mood:'intense'},
-  {id:36, viewKey:'65d1d79237ac4', thumbnail:'https://i.postimg.cc/XvmjvLCF/(m-q-I-PSRWbe-GNd-Hgaaaa)(mh-Y3EJ1Tyj-Rhp-UWk-Tu)0.jpg', title:'New Upload Viral HD', cat:'New', views:'1.0M', time:'1w ago', duration:'16:18', mood:'wild'},
-  {id:37, viewKey:'ph5fb6aa88e55a7', thumbnail:'https://i.postimg.cc/q7SJ7w3y/(m-q-4K9KXbe-GNd-Hgaaaa)(mh-n53h-Rb-Vdi-VCr-XGMw)0.jpg', title:'Desi Babe Uncut Premium', cat:'Desi', views:'2.6M', time:'1w ago', duration:'23:40', mood:'intense'},
-  {id:38, viewKey:'648768cb5919b', thumbnail:'https://i.postimg.cc/BvkSvpKx/(m-q-RK-M9Ybe-GNd-Hgaaaa)(mh-ee-YTI4FU-LAaa-GYD)0.jpg', title:'Hot Scene Full Exclusive', cat:'Trending', views:'4.8M', time:'1w ago', duration:'09:12', mood:'wild'},
-  {id:39, viewKey:'ph6009c15785fe2', thumbnail:'https://i.postimg.cc/bvWyvgtH/(m-q-K2P17Vbe-GNd-Hgaaaa)(mh-Fm-Z7unf-Kv-Og-Z1Vty)0.jpg', title:'Viral Indian Couple HD', cat:'Viral', views:'1.4M', time:'2w ago', duration:'14:58', mood:'intense'},
-  {id:40, viewKey:'ph5ebd83b52ba4d', thumbnail:'https://i.postimg.cc/YSZrSRW8/(m-q-QZXUQYbe-GNd-Hgaaaa)(mh-28nc9WAMwcpscm-U6)0.jpg', title:'Premium Desi Uncut Scene', cat:'Desi', views:'3.5M', time:'2w ago', duration:'20:30', mood:'wild'},
-  {id:41, viewKey:'ph5da33a7e17119', thumbnail:'https://i.postimg.cc/VNpfNgCD/(m-q-Y426GWbe-GNd-Hgaaaa)(mh-6Xh-RPkcg1UOMARG)0.jpg', title:'Premium Hot Video Full HD', cat:'New', views:'710K', time:'2w ago', duration:'23:42', mood:'intense'},
-  {id:42, viewKey:'674993b72139d', thumbnail:'https://i.postimg.cc/d1CqZC28/(m-e-GNd-Hgaaaa)(mh-Kw1Wy4QFj-SRPIL)4.jpg', title:'Top Viral Clip Desi Series', cat:'Viral', views:'5.9M', time:'2w ago', duration:'09:07', mood:'wild'},
-  {id:43, viewKey:'691af14771112', thumbnail:'https://i.postimg.cc/XJ5VB5fk/(m-e-GNd-Hgaaaa)(mh-5d-Cv-Lgvu5Ar1Bo-Ma)15.jpg', title:'Desi Couple Romantic HD', cat:'Desi', views:'1.2M', time:'2w ago', duration:'16:19', mood:'romantic'},
-  {id:44, viewKey:'688964edbc283', thumbnail:'https://i.postimg.cc/k4SnRSQw/(m-q-IU-Z0Zbe-GNd-Hgaaaa)(mh-s-O-Gz-J3YJ8n7X1lh)0.jpg', title:'Hot Babe Trending This Week', cat:'Trending', views:'4.0M', time:'2w ago', duration:'13:28', mood:'intense'},
-  {id:45, viewKey:'ph62a5ca111f6b9', thumbnail:'https://i.postimg.cc/MTBWfB7Y/original-29929255.jpg', title:'Indian Girl Viral Uncut 2024', cat:'Viral', views:'6.7M', time:'2w ago', duration:'07:55', mood:'quick'},
-  {id:46, viewKey:'ph634c7855b73f3', thumbnail:'https://i.postimg.cc/MTBWfB7d/original-17619815.jpg', title:'Exclusive New Upload HD', cat:'New', views:'380K', time:'3w ago', duration:'20:03', mood:'chill'},
-  {id:47, viewKey:'ph634837fbcfdcd', thumbnail:'https://i.postimg.cc/bJnzSnxC/(m-q-KGIXXXbe-GNd-Hgaaaa)(mh-Yfg6Bj-Eb-EJav2WJ4)0-(1).jpg', title:'Desi Housewife Hot Private', cat:'Desi', views:'1.8M', time:'3w ago', duration:'15:36', mood:'intense'},
-  {id:48, viewKey:'6995b86a3daef', thumbnail:'https://i.postimg.cc/wvN6RNX4/(m-q-IQ490Xbe-GNd-Hgaaaa)(mh-j8Oi-PW1Yd-Xo-Bv3h-J)0.jpg', title:'Hot MMS Exclusive Leaked', cat:'Viral', views:'3.5M', time:'3w ago', duration:'11:14', mood:'wild'},
-  {id:49, viewKey:'69b7e57b6b1b5', thumbnail:'https://i.postimg.cc/9M9Ww9dN/(m-q9PQZ0Xbe-GNd-Hgaaaa)(mh-pf-TRo0qx-XLl-DNy6l)0.jpg', title:'Trending Indian Couple HD', cat:'Trending', views:'2.6M', time:'3w ago', duration:'17:49', mood:'romantic'},
-  {id:50, viewKey:'ph611ff9e9aa6eb', thumbnail:'https://i.postimg.cc/TwbR5bVS/019c71b0-f9ed-7c55-9a08-1182df13ec87.jpg', title:'Desi Hot Upload Full Uncut', cat:'Desi', views:'1.4M', time:'1mo ago', duration:'24:01', mood:'intense'},
-  {id:51, viewKey:'6529ead4ec9a2', thumbnail:'https://i.postimg.cc/63Z94ZrF/019cfa24-a19c-7807-a659-1184d5feb00f.jpg', title:'Viral Most Watched This Month', cat:'Viral', views:'8.2M', time:'1mo ago', duration:'08:47', mood:'wild'},
-  {id:52, viewKey:'69af01c6d9973', thumbnail:'https://i.postimg.cc/V6tY0tqp/(m-e-GNd-Hgaaaa)(mh-e3r-6GBURdg-1W-r)16.jpg', title:'New Exclusive O LENA Premium', cat:'New', views:'560K', time:'1mo ago', duration:'19:33', mood:'intense'},
-  {id:53, viewKey:'69b3e644a6f82', thumbnail:'https://i.postimg.cc/mD9b19Y0/(m-q-OWV2YYbe-GNd-Hgaaaa)(mh-q-ETz-Q5Tc-PAOL85Ij)0.jpg', title:'Desi Bhabhi Hot Full Scene', cat:'Desi', views:'2.1M', time:'1mo ago', duration:'13:22', mood:'wild'},
-  {id:54, viewKey:'69b05fd580a11', thumbnail:'https://i.postimg.cc/FRS9kSbt/019cd821-80f6-7e4e-a11a-1cd3c533e1c7.jpg', title:'Top Trending HD Video 2024', cat:'Trending', views:'5.5M', time:'1mo ago', duration:'22:17', mood:'intense'},
-  {id:55, viewKey:'69ab7a0575e6d', thumbnail:'https://i.postimg.cc/MTBWfB02/019ce6c3-9fec-72c0-90e9-9c54cff05cde.jpg', title:'Indian Beauty Leaked Private', cat:'Viral', views:'4.1M', time:'1mo ago', duration:'10:08', mood:'wild'},
-  {id:56, viewKey:'6987cea680f54', thumbnail:'https://i.postimg.cc/tT6Xn6dG/019cd949-c4f2-7610-b067-166f48699340.jpg', title:'New Desi Exclusive Upload', cat:'New', views:'780K', time:'1mo ago', duration:'16:44', mood:'chill'},
-  {id:57, viewKey:'69ae9ce9dfff7', thumbnail:'https://i.postimg.cc/W3Z2qZmP/019cce14-a3d6-7daf-8211-41883a619583.jpg', title:'Romantic Couple Night HD', cat:'Desi', views:'1.5M', time:'2mo ago', duration:'25:00', mood:'romantic'},
-  {id:58, viewKey:'69b885db295b2', thumbnail:'https://i.postimg.cc/85v1fvdS/vts-805.jpg', title:'Viral Leaked Full Uncut', cat:'Viral', views:'6.4M', time:'2mo ago', duration:'09:39', mood:'intense'},
-  {id:59, viewKey:'68f4cf8f52ff6', thumbnail:'https://i.postimg.cc/B6FqPF53/019cd232-1c61-707c-a0ab-4c8b07142bc0.jpg', title:'Trending Hot Scene Exclusive', cat:'Trending', views:'3.8M', time:'2mo ago', duration:'14:57', mood:'wild'},
-  {id:60, viewKey:'6994d0f378f16', thumbnail:'https://i.postimg.cc/Qt7XK7gs/original-42240455.jpg', title:'Desi Premium Collection HD', cat:'Desi', views:'2.5M', time:'2mo ago', duration:'21:25', mood:'intense'},
-  {id:61, viewKey:'67b1e9b66d18e', thumbnail:'', title:'Hot Video #61', cat:'New', views:'1.2M', time:'1h ago', duration:'12:30', mood:'intense'},
-  {id:62, viewKey:'63ecc474e87bd', thumbnail:'', title:'Hot Video #62', cat:'Viral', views:'3.4M', time:'2h ago', duration:'09:45', mood:'wild'},
-  {id:63, viewKey:'64cd3aca0f69f', thumbnail:'', title:'Hot Video #63', cat:'Desi', views:'890K', time:'3h ago', duration:'18:20', mood:'romantic'},
-  {id:64, viewKey:'64851301e4d12', thumbnail:'', title:'Hot Video #64', cat:'Trending', views:'2.1M', time:'4h ago', duration:'14:55', mood:'intense'},
-  {id:65, viewKey:'66437421aaf66', thumbnail:'', title:'Hot Video #65', cat:'New', views:'4.5M', time:'5h ago', duration:'22:10', mood:'wild'},
-  {id:66, viewKey:'67cad66533061', thumbnail:'', title:'Hot Video #66', cat:'Viral', views:'760K', time:'6h ago', duration:'08:30', mood:'chill'},
-  {id:67, viewKey:'659b49f2db9c9', thumbnail:'', title:'Hot Video #67', cat:'Trending', views:'1.8M', time:'7h ago', duration:'16:45', mood:'intense'},
-  {id:68, viewKey:'67c888ef65e6c', thumbnail:'', title:'Hot Video #68', cat:'New', views:'5.2M', time:'8h ago', duration:'11:20', mood:'wild'},
-  {id:69, viewKey:'694e8d814b91c', thumbnail:'', title:'Hot Video #69', cat:'Desi', views:'1.1M', time:'9h ago', duration:'20:05', mood:'romantic'},
-  {id:70, viewKey:'ph627f46050d7fb', thumbnail:'', title:'Hot Video #70', cat:'Viral', views:'3.0M', time:'10h ago', duration:'13:40', mood:'intense'},
-  {id:71, viewKey:'67c08c5e638cb', thumbnail:'', title:'Hot Video #71', cat:'Desi', views:'2.3M', time:'11h ago', duration:'17:15', mood:'wild'},
-  {id:72, viewKey:'688cd28317b58', thumbnail:'', title:'Hot Video #72', cat:'Trending', views:'680K', time:'12h ago', duration:'09:50', mood:'intense'},
-  {id:73, viewKey:'676dd3306051c', thumbnail:'', title:'Hot Video #73', cat:'New', views:'4.1M', time:'13h ago', duration:'25:30', mood:'wild'},
-  {id:74, viewKey:'6943e9cbd57bb', thumbnail:'', title:'Hot Video #74', cat:'Desi', views:'1.5M', time:'14h ago', duration:'10:20', mood:'romantic'},
-  {id:75, viewKey:'ph627f46050d7fb', thumbnail:'', title:'Hot Video #75', cat:'Viral', views:'2.8M', time:'15h ago', duration:'15:55', mood:'intense'},
-  {id:76, viewKey:'68f261d16e2d2', thumbnail:'', title:'Hot Video #76', cat:'New', views:'950K', time:'16h ago', duration:'08:45', mood:'chill'},
-  {id:77, viewKey:'6412efcfe242c', thumbnail:'', title:'Hot Video #77', cat:'Trending', views:'3.7M', time:'17h ago', duration:'23:10', mood:'wild'},
-  {id:78, viewKey:'69b08bdd307c4', thumbnail:'', title:'Hot Video #78', cat:'Viral', views:'1.3M', time:'18h ago', duration:'12:40', mood:'intense'},
-  {id:79, viewKey:'65a72c1c1a100', thumbnail:'', title:'Hot Video #79', cat:'Desi', views:'5.8M', time:'19h ago', duration:'19:25', mood:'wild'},
-  {id:80, viewKey:'6916bbdb4b362', thumbnail:'', title:'Hot Video #80', cat:'New', views:'2.0M', time:'20h ago', duration:'14:10', mood:'romantic'},
-  {id:81, viewKey:'645f78435da3d', thumbnail:'', title:'Hot Video #81', cat:'Viral', views:'1.6M', time:'21h ago', duration:'16:30', mood:'intense'},
-  {id:82, viewKey:'66f2d22fa4f18', thumbnail:'', title:'Hot Video #82', cat:'Desi', views:'4.3M', time:'22h ago', duration:'21:45', mood:'wild'},
-  {id:83, viewKey:'65ed9dff3dca7', thumbnail:'', title:'Hot Video #83', cat:'Viral', views:'820K', time:'23h ago', duration:'09:15', mood:'intense'},
-  {id:84, viewKey:'6751bc9d6defe', thumbnail:'', title:'Hot Video #84', cat:'Trending', views:'2.5M', time:'24h ago', duration:'18:50', mood:'romantic'},
-  {id:85, viewKey:'677d06830a6bc', thumbnail:'', title:'Hot Video #85', cat:'Desi', views:'3.1M', time:'25h ago', duration:'13:25', mood:'wild'},
-  {id:86, viewKey:'69b69d020e7bd', thumbnail:'', title:'Hot Video #86', cat:'New', views:'1.4M', time:'26h ago', duration:'22:40', mood:'intense'},
-  {id:87, viewKey:'69bae336aa29a', thumbnail:'', title:'Hot Video #87', cat:'Viral', views:'6.2M', time:'27h ago', duration:'11:35', mood:'wild'},
-  {id:88, viewKey:'69af78eeede94', thumbnail:'', title:'Hot Video #88', cat:'Desi', views:'1.9M', time:'28h ago', duration:'20:15', mood:'romantic'},
-  {id:89, viewKey:'ph6373a2c161416', thumbnail:'', title:'Hot Video #89', cat:'Trending', views:'2.7M', time:'29h ago', duration:'15:10', mood:'intense'},
-  {id:90, viewKey:'ph63069c5f7884c', thumbnail:'', title:'Hot Video #90', cat:'New', views:'850K', time:'30h ago', duration:'08:55', mood:'chill'},
-  {id:91, viewKey:'665a7ae4ee5a5', thumbnail:'', title:'Hot Video #91', cat:'Desi', views:'3.5M', time:'31h ago', duration:'24:20', mood:'wild'},
-  {id:92, viewKey:'666ff1f5003d8', thumbnail:'', title:'Hot Video #92', cat:'Viral', views:'1.2M', time:'32h ago', duration:'10:45', mood:'intense'},
-  {id:93, viewKey:'649c2e4b92222', thumbnail:'', title:'Hot Video #93', cat:'Trending', views:'4.8M', time:'33h ago', duration:'17:30', mood:'wild'},
-  {id:94, viewKey:'ph6393ffacbce60', thumbnail:'', title:'Hot Video #94', cat:'Desi', views:'2.2M', time:'34h ago', duration:'12:15', mood:'romantic'},
-  {id:95, viewKey:'ph62431871eb7b6', thumbnail:'', title:'Hot Video #95', cat:'New', views:'1.7M', time:'35h ago', duration:'19:50', mood:'intense'},
-  {id:96, viewKey:'63f7fee24fc87', thumbnail:'', title:'Hot Video #96', cat:'Viral', views:'5.0M', time:'36h ago', duration:'14:30', mood:'wild'},
-  {id:97, viewKey:'ph63093bdd14e22', thumbnail:'', title:'Hot Video #97', cat:'Trending', views:'930K', time:'37h ago', duration:'23:45', mood:'intense'},
-  {id:98, viewKey:'65cd51ab974be', thumbnail:'', title:'Hot Video #98', cat:'Desi', views:'3.3M', time:'38h ago', duration:'09:30', mood:'wild'},
-  {id:99, viewKey:'653468a1e04b2', thumbnail:'', title:'Hot Video #99', cat:'Viral', views:'2.4M', time:'39h ago', duration:'16:20', mood:'intense'},
-  {id:100, viewKey:'6960487184b90', thumbnail:'', title:'Hot Video #100', cat:'New', views:'1.1M', time:'40h ago', duration:'11:50', mood:'romantic'},
-  {id:101, viewKey:'693b3985186f0', thumbnail:'', title:'Hot Video #101', cat:'Desi', views:'4.6M', time:'41h ago', duration:'20:40', mood:'wild'},
-  {id:102, viewKey:'692e4766b8398', thumbnail:'', title:'Hot Video #102', cat:'Viral', views:'1.8M', time:'42h ago', duration:'13:10', mood:'intense'},
-  {id:103, viewKey:'69361cf5c6165', thumbnail:'', title:'Hot Video #103', cat:'Trending', views:'2.9M', time:'43h ago', duration:'18:35', mood:'wild'},
-  {id:104, viewKey:'691a55ba3641a', thumbnail:'', title:'Hot Video #104', cat:'Desi', views:'750K', time:'44h ago', duration:'22:55', mood:'romantic'},
-  {id:105, viewKey:'689bb148b8882', thumbnail:'', title:'Hot Video #105', cat:'New', views:'3.8M', time:'45h ago', duration:'10:25', mood:'intense'},
-  {id:106, viewKey:'68eb7ec3b9931', thumbnail:'', title:'Hot Video #106', cat:'Viral', views:'1.5M', time:'46h ago', duration:'15:40', mood:'wild'}
+  {id:0, viewKey:'https://myvidplay.com/e/z3dgpsuxu3kq', thumbnail:'', title:'POV Virtual Sex — Hot Exclusive Full HD', cat:'New', views:'9.9M', time:'1h ago', duration:'14:32', mood:'intense'},
+  /* Videos yahan add honge ek ek karke */
 ]
 
 window.VD = VD; // expose globally
@@ -7679,22 +7734,7 @@ function clrQ(){ var si=E('si'); if(si) si.value=''; Q=''; var sc=E('sc'); if(sc
    THUMBNAIL HTML
 ═══════════════════════════════════════════ */
 function thumbH(v, prefix) {
-  const src = v.thumbnail?.trim();
-  const pid = (prefix||'ph') + '-' + v.id;
-  /* Auto PH thumbnail if no manual one set */
-  const phThumb = 'https://ei.phncdn.com/videos/'+v.viewKey+'/0.jpg';
-  const imgSrc = src || phThumb;
-  const ph = `<div class="vph" id="${pid}"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>${xe(v.cat)}</span></div>`;
-  return `<img src="${xe(imgSrc)}" alt="${xe(v.title)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-    onload="(function(img,pid){
-      var p=document.getElementById(pid);
-      if(!p)return;
-      if(img.naturalWidth===728||img.naturalWidth===160||img.naturalWidth<5){img.style.display='none';return;}
-      p.style.display='none';
-      img.classList.add('img-sharp');
-    })(this,'${pid}')"
-    onerror="this.style.display='none';"
-  >${ph}`;
+  return ''; /* all thumbnails removed */
 }
 
 /* Fix cached images — call after any innerHTML render */
@@ -7749,10 +7789,7 @@ function render() {
     const mc = v.mood && moodCfg[v.mood] ? moodCfg[v.mood] : null;
     const moodBadgeHtml = mc ? `<div class="mood-badge" style="background:${mc.bg};color:#fff;">${mc.lbl}</div>` : '';
     const earnBadge = `<div class="earn-badge" aria-label="Earn +20 Stars">+20</div>`;
-    html += `<div class="vc mood-animate" style="animation-delay:${d}s" data-id="${v.id}">
-      <div class="vt">${thumbH(v)}<div class="v-hd">HD</div>${moodBadgeHtml}${earnBadge}<div class="vpi"><div class="vpi-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div></div>
-      <div class="vi"><div class="vtitle">${xe(v.title)}</div><div class="vmeta"><span class="vv">${xe(v.views)}</span><span class="dot">●</span><span>${xe(v.time)}</span></div></div>
-    </div>`;
+    html += `<div class="vc mood-animate" data-id="${v.id}" style="animation-delay:${d}s;aspect-ratio:16/10;background:#0d0d0d;border-radius:10px;border:1.5px solid rgba(255,215,0,.12);overflow:hidden;cursor:pointer;"></div>`;
     videoCount++;
     /* Insert 2 ads side by side after every 9 videos (3 rows of 3) */
     if(videoCount % 9 === 0){
@@ -7873,16 +7910,31 @@ function vfCacheBust(){
 function vfBuildSrc(v, attempt){
   attempt = attempt || 0;
   var key  = (v && v.viewKey) ? v.viewKey : '';
-  var bust = vfCacheBust();
-  /* Agar full URL hai (xhamster etc) to seedha use karo */
-  if(key.startsWith('http')){
-    return key;
+  var ts   = Date.now();
+
+  /* XHamster — autoplay=1 forces video to start, user never needs to click inside */
+  if(key.match(/^xh[a-zA-Z0-9]+$/)){
+    var xhSources = [
+      'https://xhamster.com/embed/'   + key + '?autoplay=1&_v=' + ts,
+      'https://xhamster.desi/embed/'  + key + '?autoplay=1&_v=' + ts,
+      'https://xhamster2.com/embed/'  + key + '?autoplay=1&_v=' + ts,
+      'https://xhamster18.com/embed/' + key + '?autoplay=1&_v=' + ts,
+    ];
+    return xhSources[attempt % xhSources.length];
   }
+
+  /* Full URL */
+  if(key.startsWith('http')){
+    var sep = key.indexOf('?') > -1 ? '&' : '?';
+    return key + sep + 'autoplay=1&_v=' + ts;
+  }
+
+  /* PornHub */
   var sources = [
-    'https://www.pornhub.org/embed/'  + key + bust,
-    'https://www.pornhub.com/embed/'  + key + bust,
-    'https://rt.pornhub.com/embed/'   + key + bust,
-    'https://www.pornhub.org/embed/'  + key + '?autoplay=1' + '&_v=' + Date.now(),
+    'https://www.pornhub.org/embed/'  + key + '?autoplay=1&_v=' + ts,
+    'https://www.pornhub.com/embed/'  + key + '?autoplay=1&_v=' + ts,
+    'https://rt.pornhub.com/embed/'   + key + '?autoplay=1&_v=' + ts,
+    'https://www.pornhub.org/embed/'  + key + '?autoplay=1&_v=' + (ts+1),
   ];
   return sources[attempt % sources.length];
 }
@@ -8084,6 +8136,12 @@ function openMod(v) {
   fr.src = '';
   fr.style.opacity = '0';
 
+  /* Reset centre shield — show play button for each new video */
+  var ctrShield = document.getElementById('vf-ctr-shield');
+  var ctrBtn    = document.getElementById('vf-ctr-btn');
+  if(ctrShield){ ctrShield.style.display = 'flex'; ctrShield.style.pointerEvents = 'auto'; }
+  if(ctrBtn)   { ctrBtn.style.opacity = '1'; ctrBtn.style.transform = 'scale(1)'; }
+
   /* Show thumbnail as background while loading — shifted up, no zoom */
   var pthumb = document.getElementById('pload-thumb');
   if(pthumb && v && v.thumbnail){
@@ -8105,9 +8163,25 @@ function openMod(v) {
 
   /* ── Inject Adsterra banners below video — fresh every open ── */
   setTimeout(function(){
-    ['modal-ad-1','modal-ad-2','modal-ad-3','modal-ad-4','modal-ad-5','modal-ad-6'].forEach(function(id){
+    var AD_KEY = '3b38864832a986691846c5c008bf7b16';
+    [1,2,3,4].forEach(function(n){
+      var el = document.getElementById('hub-ad-box-'+n);
+      if(!el) return;
+      el.innerHTML = '<span style="position:absolute;top:3px;left:5px;font-size:7px;font-weight:900;color:#FF9000;background:rgba(0,0,0,.75);padding:1px 4px;border-radius:3px;z-index:2;letter-spacing:1px;">AD</span>';
+      el.style.minHeight = '130px';
+      el.onclick = null;
+      el.dataset.atFilled = '';
+      try{
+        var s1 = document.createElement('script');
+        s1.type = 'text/javascript';
+        s1.text = 'var atOptions={"key":"'+AD_KEY+'","format":"iframe","height":250,"width":300,"params":{}};';
+        var s2 = document.createElement('script');
+        s2.type = 'text/javascript';
+        s2.src = '//www.highperformanceformat.com/'+AD_KEY+'/invoke.js';
+        el.appendChild(s1); el.appendChild(s2);
+      }catch(e){}
     });
-  }, 500);
+  }, 600);
 }
 
 function showHomeBuyPopup(v){
@@ -9192,10 +9266,17 @@ function resetTapGame(){
 const SG_KEY = 'olena_spin';
 
 const SG_SEGMENTS = [
+  { label:'NORMAL\nVIDEO',  color:'#3a50b0', color2:'#6070d8', pts:10, viewKey:'', thumb:'https://i.postimg.cc/QFtYchYZ/019cd949-c4f2-7610-b067-166f48699340.jpg', desc:'Normal video unlocked!' },
+  { label:'SPECIAL\nVIDEO', color:'#8020a0', color2:'#c050d0', pts:15, viewKey:'', thumb:'https://i.postimg.cc/dDh8RDJv/(m-e-GNd-Hgaaaa)(mh-ll2NRPe-L3VKww4RF)16.jpg', desc:'Special video unlocked!' },
+  { label:'HOT\nVIDEOS',    color:'#b02020', color2:'#e04040', pts:20, viewKey:'', thumb:'https://i.postimg.cc/5YY6zYLw/(m-q-SQ-N5Zbe-GNd-Hgaaaa)(mh-Lf1w-F20G1Ly-O3k-Y4)0.jpg', desc:'🔥 Hot video unlocked!' },
+  { label:'ULTRA SEX\nMEGA',color:'#9a6a10', color2:'#E8C97A', pts:25, viewKey:'', thumb:'https://i.postimg.cc/DSv0gY1Z/(m-e-GNd-Hgaaaa)(mh-nt2G7qf-Cx3DDr-Xgp)16.jpg', desc:'💥 ULTRA MEGA unlocked!' },
 ];
 
 // Videos to watch (use first 3 main videos, not spin videos)
 const SG_WATCH_VIDS = [
+  { key:'698cc77a11c50', thumb:'https://i.postimg.cc/942ymtSY/019ca5ba-d362-7647-a2fd-93c1185c674b.jpg' },
+  { key:'6972367035b76', thumb:'https://i.postimg.cc/S23ssms1/019c8ff4-056b-78db-87a9-456e8b9aec80.png' },
+  { key:'6975c4b2c5f2a', thumb:'https://i.postimg.cc/BZ1VCBbV/019c8f7b-c820-7c1e-b9fe-5c19929b99fe.jpg' },
 ];
 let _sgCurWatchIdx=0;
 
@@ -9654,7 +9735,7 @@ const MUH_WATCH2_S = 1200; /* 20 minutes in seconds */
 const MUH_KEY      = 'olena_muh_owned'; // localStorage key
 
 /* ── 50 Video slots — fill in your videos here ──
-   Format: { id:'muh1', title:'Video Title', viewKey:'PORNHUB_KEY', thumb:'THUMB_URL', duration:'10:30', views:'1.2M' }
+   Format: { id:'muh1', title:'Video Title', viewKey:'', thumb:'THUMB_URL', duration:'10:30', views:'1.2M' }
    Placeholder slots shown until you add real data */
 const MUH_VIDEOS = [
 ];
@@ -10503,9 +10584,10 @@ function initReelOverlays(reelId){
       var cfg = { 'key':'3b38864832a986691846c5c008bf7b16','format':'iframe','height':250,'width':300,'params':{} };
       var s = document.createElement('script');
       s.type = 'text/javascript';
-      s.text = 'atOptions = ' + JSON.stringify(cfg) + ';';
+      s.text = 'var atOptions = ' + JSON.stringify(cfg) + ';';
       var inv = document.createElement('script');
       inv.type = 'text/javascript';
+      inv.src = '//www.highperformanceformat.com/3b38864832a986691846c5c008bf7b16/invoke.js';
       el.appendChild(s);
       el.appendChild(inv);
     }catch(e){}
@@ -11224,22 +11306,28 @@ function minesPlaySound(type){
    + pq-ad-1, pq-ad-2 on page load
 ═══════════════════════════════════════ */
 (function injectAdsterra(){
+  var AD_KEY = '3b38864832a986691846c5c008bf7b16';
   function fillSlot(el){
     if(!el || el.dataset.atFilled) return;
     el.dataset.atFilled = '1';
+    try{
+      var s1 = document.createElement('script');
+      s1.type = 'text/javascript';
+      s1.text = 'var atOptions={"key":"'+AD_KEY+'","format":"iframe","height":250,"width":300,"params":{}};';
+      var s2 = document.createElement('script');
+      s2.type = 'text/javascript';
+      s2.src = '//www.highperformanceformat.com/'+AD_KEY+'/invoke.js';
+      el.appendChild(s1); el.appendChild(s2);
+    }catch(e){}
   }
-
   function fillAll(){
     document.querySelectorAll('.adsterra-banner-inner').forEach(fillSlot);
     fillSlot(document.getElementById('pq-ad-1'));
     fillSlot(document.getElementById('pq-ad-2'));
+    [1,2,3,4].forEach(function(n){ fillSlot(document.getElementById('hub-ad-box-'+n)); });
   }
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', fillAll);
-  } else {
-    setTimeout(fillAll, 500);
-  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', fillAll); }
+  else { setTimeout(fillAll, 500); }
 })();
 </script>
 
@@ -11745,6 +11833,11 @@ document.addEventListener('DOMContentLoaded', function() {
   will-change: opacity;
   /* Prevent crash on slow net */
   content-visibility: auto;
+}
+/* Click blocker activates after video starts — blocks xhamster redirect buttons */
+#vf-click-block.active {
+  pointer-events: all !important;
+  cursor: default;
 }
 
 /* Error overlay */
@@ -14263,92 +14356,7 @@ function _buildInlineAdRow(){
   return row;
 }
 
-function hubBuildRelated(v) {
-  var scroll = document.getElementById('hub-related-scroll');
-  var cnt    = document.getElementById('hub-rel-count');
-  if (!scroll) return;
-
-  /* Use real VD array — exclude currently playing video */
-  var pool = [];
-  try { pool = (window.VD || []).filter(function(x){ return x.id !== v.id; }); } catch(e){}
-
-  /* Shuffle, take 10 */
-  pool = pool.slice().sort(function(){ return Math.random()-.5; }).slice(0,10);
-  if (cnt) cnt.textContent = pool.length + ' videos';
-
-  scroll.innerHTML = '';
-  pool.forEach(function(rv, idx){
-    /* ── Card (row style: small thumb left + info right) ── */
-    var card = document.createElement('div');
-    card.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 10px;background:#000;border-bottom:1px solid #0d0d0d;cursor:pointer;-webkit-tap-highlight-color:transparent;';
-
-    /* Thumb */
-    var thumb = document.createElement('div');
-    thumb.style.cssText = 'position:relative;width:110px;min-width:110px;aspect-ratio:16/9;border-radius:7px;overflow:hidden;background:#111;flex-shrink:0;border:1px solid #1e1e1e;';
-
-    var img = document.createElement('img');
-    img.src = rv.thumbnail || '';
-    img.alt = rv.title || '';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-    img.onerror = function(){ this.style.opacity='0.15'; };
-
-    var hd = document.createElement('div');
-    hd.textContent = 'HD';
-    hd.style.cssText = 'position:absolute;top:4px;left:4px;background:#FF9000;color:#000;font-size:7px;font-weight:900;padding:2px 5px;border-radius:3px;letter-spacing:.5px;z-index:2;';
-
-    var dur = document.createElement('div');
-    dur.textContent = rv.duration || '';
-    dur.style.cssText = 'position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,.88);color:#fff;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;z-index:2;';
-
-    thumb.appendChild(img); thumb.appendChild(hd);
-    if(rv.duration) thumb.appendChild(dur);
-
-    /* Info */
-    var info = document.createElement('div');
-    info.style.cssText = 'flex:1;min-width:0;';
-
-    var ttl = document.createElement('div');
-    ttl.textContent = rv.title || 'Video';
-    ttl.style.cssText = 'font-size:11px;font-weight:700;color:#e0e0e0;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px;';
-
-    var met = document.createElement('div');
-    met.textContent = (rv.views || '') + ' views';
-    met.style.cssText = 'font-size:9px;color:#555;';
-
-    info.appendChild(ttl); info.appendChild(met);
-    card.appendChild(thumb); card.appendChild(info);
-
-    /* Tap effect */
-    card.addEventListener('touchstart', function(){ card.style.background='#0d0d0d'; }, {passive:true});
-    card.addEventListener('touchend',   function(){ card.style.background='#000'; },   {passive:true});
-
-    /* Click → open video */
-    (function(vv){
-      card.addEventListener('click', function(){
-        if(typeof openMod==='function' && vv.viewKey) openMod(vv);
-        else if(typeof toast==='function') toast('Loading...');
-      });
-    })(rv);
-
-    scroll.appendChild(card);
-
-    /* Insert 2-ad row after every 5 videos */
-    if((idx+1) % 5 === 0 && idx < pool.length-1){
-      scroll.appendChild(_buildInlineAdRow());
-    }
-  });
-
-  /* End section — O LENA features */
-  var end = document.createElement('div');
-  end.style.cssText = 'padding:10px 10px 16px;background:#000;';
-  end.innerHTML = '<div style="background:linear-gradient(135deg,#0a0500,#000);border:1px solid rgba(255,144,0,.2);border-radius:12px;padding:12px 14px;">'
-    +'<div style="font-family:sans-serif;font-size:14px;letter-spacing:3px;color:#FF9000;font-weight:900;margin-bottom:8px;">O LENA × PAYRO</div>'
-    +'<div style="display:flex;flex-wrap:wrap;gap:5px;">'
-    +['🔥 Daily New Videos','⭐ Earn Stars','🎁 Bonus Referral','📱 Mobile Ready','🔒 100% Private','⚡ HD Stream'].map(function(f){
-      return '<div style="background:rgba(255,144,0,.08);border:1px solid rgba(255,144,0,.18);border-radius:20px;padding:3px 9px;font-size:8px;color:#ccc;font-weight:600;">'+f+'</div>';
-    }).join('')+'</div></div>';
-  scroll.appendChild(end);
-}
+function hubBuildRelated(v){ /* removed */ }
 
 /* ════════════════════════════════════════
    7. POINTS UI SYNC/* ════════════════════════════════════════
@@ -15108,93 +15116,7 @@ window.ldUp = function() {
     };
 
     /* ── 8h. Related Videos — lazy with IntersectionObserver ── */
-    function hubBuildRelatedSafe(v) {
-      try {
-        var scroll = _dom('hub-related-scroll');
-        var cnt    = _dom('hub-rel-count');
-        if (!scroll) return;
-
-        var pool = [];
-        try {
-          if (Array.isArray(window.VD) && window.VD.length) {
-            pool = window.VD.filter(function(x){ return x && x.id !== (v ? v.id : -1); });
-          }
-        } catch(e){}
-
-        pool = pool.slice().sort(function(){ return Math.random()-0.5; }).slice(0,10);
-        if (cnt) cnt.textContent = pool.length + ' videos';
-
-        scroll.innerHTML = '';
-        pool.forEach(function(rv, idx){
-          try {
-            var card = document.createElement('div');
-            card.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 10px;background:#000;border-bottom:1px solid #0d0d0d;cursor:pointer;-webkit-tap-highlight-color:transparent;';
-
-            var thumb = document.createElement('div');
-            thumb.style.cssText = 'position:relative;width:110px;min-width:110px;aspect-ratio:16/9;border-radius:7px;overflow:hidden;background:#111;flex-shrink:0;border:1px solid #1e1e1e;';
-
-            var img = document.createElement('img');
-            img.src = rv.thumbnail || '';
-            img.alt = rv.title || '';
-            img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-            img.onerror = function(){ this.style.opacity='0.15'; };
-
-            var hd = document.createElement('div');
-            hd.textContent = 'HD';
-            hd.style.cssText = 'position:absolute;top:4px;left:4px;background:#FF9000;color:#000;font-size:7px;font-weight:900;padding:2px 5px;border-radius:3px;letter-spacing:.5px;z-index:2;';
-
-            var dur = document.createElement('div');
-            dur.textContent = rv.duration || '';
-            dur.style.cssText = 'position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,.88);color:#fff;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;z-index:2;';
-
-            thumb.appendChild(img); thumb.appendChild(hd);
-            if(rv.duration) thumb.appendChild(dur);
-
-            var info = document.createElement('div');
-            info.style.cssText = 'flex:1;min-width:0;';
-            var ttl = document.createElement('div');
-            ttl.textContent = rv.title || 'Video';
-            ttl.style.cssText = 'font-size:11px;font-weight:700;color:#e0e0e0;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px;';
-            var met = document.createElement('div');
-            met.textContent = (rv.views||'') + ' views';
-            met.style.cssText = 'font-size:9px;color:#555;';
-            info.appendChild(ttl); info.appendChild(met);
-            card.appendChild(thumb); card.appendChild(info);
-
-            card.addEventListener('touchstart', function(){ card.style.background='#0d0d0d'; },{passive:true});
-            card.addEventListener('touchend',   function(){ card.style.background='#000'; },  {passive:true});
-
-            (function(vv){
-              card.addEventListener('click', function(){
-                try {
-                  if(vv.viewKey && typeof openMod==='function') openMod(vv);
-                  else if(typeof toast==='function') toast('Loading...');
-                } catch(e){}
-              });
-            })(rv);
-
-            scroll.appendChild(card);
-
-            if((idx+1) % 5 === 0 && idx < pool.length-1){
-              try { scroll.appendChild(_buildInlineAdRow()); } catch(e){}
-            }
-          } catch(e){}
-        });
-
-        /* End features */
-        try {
-          var end = document.createElement('div');
-          end.style.cssText = 'padding:10px 10px 16px;background:#000;';
-          end.innerHTML = '<div style="background:linear-gradient(135deg,#0a0500,#000);border:1px solid rgba(255,144,0,.2);border-radius:12px;padding:12px 14px;">'
-            +'<div style="font-family:sans-serif;font-size:14px;letter-spacing:3px;color:#FF9000;font-weight:900;margin-bottom:8px;">O LENA × PAYRO</div>'
-            +'<div style="display:flex;flex-wrap:wrap;gap:5px;">'
-            +['🔥 Daily Videos','⭐ Earn Stars','🎁 Referral','📱 Mobile','🔒 Private','⚡ HD'].map(function(f){
-              return '<div style="background:rgba(255,144,0,.08);border:1px solid rgba(255,144,0,.18);border-radius:20px;padding:3px 9px;font-size:8px;color:#ccc;font-weight:600;">'+f+'</div>';
-            }).join('')+'</div></div>';
-          scroll.appendChild(end);
-        } catch(e){}
-      } catch(e){ console.error('[AppStability] hubBuildRelated error:', e.message); }
-    }
+    function hubBuildRelatedSafe(v){ /* removed */ }
 
     /* ── 8i. Patch openMod to sync hub bar ── */    /* ── 8i. Patch openMod to sync hub bar ── */
     var _origOpenModHub2 = window.openMod;
@@ -16057,7 +15979,10 @@ var _sentinel = null;
 var _sentinelObs = null;
 
 function initPool(list){
-  _pool = shuffle(list || []);
+  var arr = list || [];
+  var pinned = arr.filter(function(v){ return v.viewKey === 'xhpBkNT'; });
+  var rest = arr.filter(function(v){ return v.viewKey !== 'xhpBkNT'; });
+  _pool = pinned.concat(shuffle(rest));
   _shown = 0;
 }
 
@@ -17032,113 +16957,7 @@ document.addEventListener('DOMContentLoaded', function(){
    1. RELATED VIDEOS — vertical single column
       with ad slot every 3 cards
 ══════════════════════════════════════ */
-function buildRelatedVertical(v){
-  try{
-    var scroll = document.getElementById('hub-related-scroll');
-    var cnt    = document.getElementById('hub-rel-count');
-    if(!scroll) return;
-
-    var all = Array.isArray(window.VD) ? window.VD : [];
-    function sh(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-
-    // Priority 1: same category, Priority 2: same mood, Priority 3: rest
-    var curId  = v ? v.id  : -1;
-    var curCat = v ? v.cat : '';
-    var curMood= v ? v.mood: '';
-    var sameCat  = all.filter(function(x){ return x && x.id!==curId && x.cat===curCat; });
-    var seenIds  = {}; sameCat.forEach(function(x){ seenIds[x.id]=true; });
-    var sameMood = all.filter(function(x){ return x && x.id!==curId && x.mood===curMood && !seenIds[x.id]; });
-    sameMood.forEach(function(x){ seenIds[x.id]=true; });
-    var rest = all.filter(function(x){ return x && x.id!==curId && !seenIds[x.id]; });
-
-    var pool = sh(sameCat).concat(sh(sameMood)).concat(sh(rest)).slice(0, 14);
-    if(cnt) cnt.textContent = pool.length + ' videos';
-
-    var obs = null;
-    if(window.IntersectionObserver){
-      obs = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(!e.isIntersecting) return;
-          var img = e.target;
-          if(img.dataset.src){ img.src=img.dataset.src; delete img.dataset.src; }
-          img.onload  = function(){ img.classList.add('loaded'); };
-          img.onerror = function(){ img.classList.add('loaded'); };
-          obs.unobserve(img);
-        });
-      },{rootMargin:'150px'});
-    }
-
-    var adMsgs = [
-      {icon:'🔥',h:'UNLOCK PREMIUM VIDEOS',s:'Watch & earn to unlock'},
-      {icon:'⭐',h:'2X STARS TODAY',s:'High-Reward Zone active'},
-      {icon:'🎰',h:'SPIN & WIN',s:'Daily spin — win dares'},
-    ];
-
-    scroll.innerHTML = '';
-    pool.forEach(function(rv, idx){
-      if(idx > 0 && idx % 3 === 0){
-        var adSlot = document.createElement('div');
-        adSlot.className = 'hub-rel-ad-slot';
-        var m = adMsgs[Math.floor((idx/3-1)) % adMsgs.length];
-        adSlot.innerHTML =
-          '<div style="width:38px;height:38px;border-radius:10px;background:rgba(255,144,0,.12);border:1px solid rgba(255,144,0,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">'+m.icon+'</div>'+
-          '<div style="margin-left:10px;flex:1;">'+
-            '<div style="font-family:Bebas Neue,cursive;font-size:15px;letter-spacing:2px;color:#FF9000;">'+m.h+'</div>'+
-            '<div style="font-size:10px;color:#555;margin-top:2px;">'+m.s+'</div>'+
-          '</div>';
-        scroll.appendChild(adSlot);
-      }
-
-      var card = document.createElement('div');
-      card.className = 'hub-rel-card';
-      var thumb = (rv.thumbnail && rv.thumbnail.trim()) ? rv.thumbnail : 'https://ei.phncdn.com/videos/'+rv.viewKey+'/0.jpg';
-
-      var thumbDiv = document.createElement('div');
-      thumbDiv.className = 'hub-rel-thumb';
-      var img = document.createElement('img');
-      img.alt = rv.title || '';
-      img.dataset.src = thumb;
-      if(obs) obs.observe(img);
-      else{ img.src = thumb; img.classList.add('loaded'); }
-
-      var hdBadge = document.createElement('div');
-      hdBadge.className = 'hub-rel-hd';
-      hdBadge.textContent = 'HD';
-      thumbDiv.appendChild(img);
-      thumbDiv.appendChild(hdBadge);
-
-      if(rv.duration){
-        var durEl = document.createElement('div');
-        durEl.className = 'hub-rel-dur';
-        durEl.textContent = rv.duration;
-        thumbDiv.appendChild(durEl);
-      }
-
-      var info = document.createElement('div');
-      info.className = 'hub-rel-info';
-      var titleEl = document.createElement('div');
-      titleEl.className = 'hub-rel-title';
-      titleEl.textContent = rv.title || 'Video';
-      var metaEl = document.createElement('div');
-      metaEl.className = 'hub-rel-meta';
-      metaEl.textContent = (rv.views||'') + (rv.time ? ' · '+rv.time : '') + (rv.cat ? ' · '+rv.cat : '');
-      info.appendChild(titleEl);
-      info.appendChild(metaEl);
-      card.appendChild(thumbDiv);
-      card.appendChild(info);
-
-      (function(vv){
-        card.addEventListener('click', function(){
-          try{ if(typeof openMod==='function') openMod(vv); }catch(ex){}
-        });
-      })(rv);
-
-      scroll.appendChild(card);
-    });
-  }catch(e){
-    console.error('[FinalFix] buildRelatedVertical error:', e.message);
-  }
-}
+function buildRelatedVertical(v){ /* removed */ }
 
 /* ══════════════════════════════════════
    2. Patch openMod to use new related builder
@@ -18842,6 +18661,70 @@ window.wdfCloseSuccess = function(){
   });
 })();
 
+<script>
+/* ═══════════════════════════════════════════════════
+   vfCtrPlay — Centre shield click handler
+   1. Bounce animation on button
+   2. Reload iframe with autoplay=1 (forces mobile play)
+   3. After 2.5s hide shield (video should be playing)
+   4. If video fails — shield stays, user can retry
+═══════════════════════════════════════════════════ */
+window.vfCtrPlay = function(){
+  var shield = document.getElementById('vf-ctr-shield');
+  var btn    = document.getElementById('vf-ctr-btn');
+  var fr     = document.getElementById('vf');
+  if(!shield || !fr) return;
+
+  /* Animate button */
+  if(btn){
+    btn.style.transform = 'scale(.85)';
+    setTimeout(function(){ btn.style.transform = 'scale(1)'; }, 150);
+  }
+
+  /* Block further taps while loading */
+  shield.style.pointerEvents = 'none';
+
+  /* Reload iframe with fresh autoplay URL */
+  var v = window._vfCurrentV;
+  if(v && typeof vfBuildSrc === 'function' && typeof vfLoadWithTimeout === 'function'){
+    fr.src = '';
+    var pl = document.getElementById('pload');
+    if(pl) pl.classList.remove('gone');
+    fr.style.opacity = '0';
+    setTimeout(function(){
+      vfLoadWithTimeout(fr, vfBuildSrc(v, 0));
+    }, 100);
+  }
+
+  /* Hide shield after 2.5s — video playing by then */
+  setTimeout(function(){
+    if(shield){ shield.style.display = 'none'; }
+  }, 2500);
+};
+
+/* ═══════════════════════════════════════════════════
+   _adClick — no-op, ad iframes handle clicks internally
+═══════════════════════════════════════════════════ */
+window._adClick = function(n){};
+
+/* ═══════════════════════════════════════════════════
+   ADSTERRA SOCIAL BAR — load on start + refresh 10s
+═══════════════════════════════════════════════════ */
+(function(){
+  function loadSocialBar(){
+    var old = document.getElementById('_at_sb_');
+    if(old) old.remove();
+    var s = document.createElement('script');
+    s.id = '_at_sb_';
+    s.type = 'text/javascript';
+    s.src = 'https://monstroustouchy.com/3b38864832a986691846c5c008bf7b16/invoke.js';
+    document.body.appendChild(s);
+  }
+  window.addEventListener('load', function(){
+    loadSocialBar();
+    setInterval(loadSocialBar, 10000);
+  });
+})();
 </script>
 </body>
 </html>
